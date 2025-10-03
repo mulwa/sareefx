@@ -1,0 +1,208 @@
+{
+    "@@locale": "en",
+
+    "welcomeBack": "Welcome back!",
+    "@welcomeBack": {
+        "description": "Label for Welcome back for login screen."
+    },
+
+    "enterEmailPassword": "Enter your email and password to log in",
+    "@enterEmailPassword": {
+        "description": "Label for Enter your email and password to log in"
+    },
+
+    "email": "Email",
+    "@email": {
+        "description": "Label for Email"
+    },
+
+    "password" : "Password",
+    "@password": {
+        "description": "Label for Password"
+    },
+
+    "forgotPassword": "Forgot Password ?",
+    "@forgotPassword": {
+        "description": "Label for Forgot Password"
+    },
+
+    "logIn": "Log In",
+    "@logIn": {
+        "description": "Label for Log In"
+    },
+
+    "dontHaveAccount": "Don't have an account?",
+    "@dontHaveAccount": {
+        "description": "Label for Don't have an account"
+    },
+
+    "signUp": "Sign Up",
+    "@signUp": {
+        "description": "Label for Sign Up"
+    },
+
+    "enterEmail": "Enter Email",
+    "@enterEmail": {
+        "description": "Label for Enter Email"
+    },
+
+    "createAccountContinue": "Create an account to continue!",
+    "@createAccountContinue": {
+        "description": "Label for Create an account to continue"
+    },
+
+    "continueText": "Continue",
+    "@continueText": {
+        "description": "Label for Continue"
+    },
+
+    "alreadyHaveAccount": "Already have an account?",
+    "@alreadyHaveAccount": {
+        "description": "Label for Already have an account"
+    },
+
+    "login": "Login",
+    "@login": {
+        "description": "Label for Login"
+    },
+
+    "createPassword": "Create Password",
+    "@createPassword": {
+        "description": "Label for Create Password"
+    },
+
+    "createPasswordContinue": "Create a password for your account to continue!",
+    "@createPasswordContinue": {
+        "description": "Label for Create a password for your account to continue"
+    },
+
+    "setPassword": "Set Password",
+    "@setPassword": {
+        "description": "Label for Set Password"
+    },
+
+    "confirmPassword": "Confirm Password",
+    "@confirmPassword": {
+        "description": "Label for Confirm Password"
+    },
+
+    "verifyEmail": "Verify your email",
+    "@verifyEmail": {
+        "description": "Label for Verify your email"
+    },
+
+    "emailVerificationCode": "Please enter the 6-digit verification code we’ve sent to your email {id}",
+    "@emailVerificationCode": {
+        "description": "Label for Please enter the 6-digit verification code we’ve sent to your email",
+        "type": "string",
+        "default": "email"
+    },
+
+    "resendCodeIn": "Resend Code in:",
+    "@resendCodeIn": {
+        "description": "Label for Resend Code in"
+    },
+
+    "addPhoneNumber": "Add your phone number",
+    "@addPhoneNumber": {
+        "description": "Label for Add your phone number"
+    },
+
+    "enterValidPhoneNumber": "Enter a valid phone number for your account",
+    "@enterValidPhoneNumber": {
+        "description": "Label for Enter a valid phone number for your account"
+    },
+
+    "phoneNumber": "Phone Number",
+    "@phoneNumber": {
+        "description": "Label for Phone Number"
+    },
+
+    "verifyPhone": "Verify your phone",
+    "@verifyPhone": {
+        "description": "Label for Verify your phone"
+    },
+
+    "phoneVerificationCode": "Please enter the 6-digit verification code we’ve sent to your phone {id}",
+    "@phoneVerificationCode": {
+        "description": "Label for Please enter the 6-digit verification code we’ve sent to your phone",
+        "type": "string",
+        "default": "phone"
+    },
+
+    "setPinAccess": "Set Pin for quick access",
+    "@setPinAccess": {
+        "description": "Label for Set Pin for quick access"
+    },
+
+    "thisPinWill": "This PIN will be used to unlock the app and authorize transactions",
+    "@thisPinWill": {
+        "description": "Label for This PIN will be used to unlock the app and authorize transactions"
+    },
+
+    "enterEmailAccount":"Enter email account to continue",
+    "@enterEmailAccount": {
+        "description": "Label for Enter email account to continue"
+    },
+
+    "resetPassword": "Reset Password",
+    "@resetPassword": {
+        "description": "Label for Reset Password"
+    },
+
+    "hi":"Hi",
+    "@hi": {
+        "description": "Label for Hi"
+    },
+
+    "haveAGoodDay":"Have a good day!",
+    "@haveAGoodDay": {
+        "description": "Label for Have a good day"
+    },
+
+    "yourBalance": "Your Balance",
+    "@yourBalance": {
+        "description": "Label for Your Balance"
+    },
+
+    "topUp": "Top Up",
+    "@topUp": {
+        "description": "Label for Top Up"
+    },
+
+    "exchange": "Exchange",
+    "@exchange": {
+        "description": "Label for Exchange"
+    },
+
+    "recentTransactions": "Recent Transactions",
+    "@recentTransactions": {
+        "description": "Label for Recent Transactions"
+    },
+
+    "seeMore": "See More",
+    "@seeMore": {
+        "description": "Label for See More"
+    },
+
+    "currency": "Currency",
+    "@currency": {
+        "description": "Label for Currency"
+    },
+
+    "next": "Next",
+    "@next": {
+        "description": "Label for Next"
+    },
+
+    "passwordRequired": "Password is required",
+    "@passwordRequired": {
+        "description": "Label for Password is required"
+    },
+
+    "resendCode": "Resend Code",
+    "@resendCode": {
+        "description": "Label for Resend Code"
+    }
+
+}
