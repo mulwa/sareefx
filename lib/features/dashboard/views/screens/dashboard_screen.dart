@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:card_swiper/card_swiper.dart';
@@ -20,6 +21,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final imagePaths = [
+      AssetsPath.carouselBanner,
+      AssetsPath.carouselBanner,
+      AssetsPath.carouselBanner,
+    ];
     final size = MediaQuery.sizeOf(context);
     final l10n = context.l10n;
     return Scaffold(
@@ -166,7 +172,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 text: l10n.topUp,
                               ),
                             ),
-                            SizedBox(width: size.width * 0.04),
+                            SizedBox(width: 12),
+                            Expanded(
+                              child: BalanceOption(
+                                icon: SvgPicture.asset(AssetsPath.transferIcon),
+                                text: l10n.fundsTransfer,
+                              ),
+                            ),
+                            SizedBox(width: 12),
                             Expanded(
                               child: BalanceOption(
                                 icon: SvgPicture.asset(AssetsPath.exchangeIcon),
@@ -297,35 +310,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   SizedBox(height: size.height * 0.02),
                   Text(
-                    l10n.currency,
+                    l10n.dealsOffers,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   SizedBox(height: size.height * 0.02),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CurrencyCard(
-                        symbol: r'$',
-                        currency: 'US Dollar',
-                        rate: '0.87',
-                        color: Color(0xFFd6e1f6),
-                      ),
-                      CurrencyCard(
-                        symbol: '\u{20AC}',
-                        currency: 'Euro',
-                        rate: '0.97',
-                        color: Color(0xFFf5c1c3),
-                      ),
-                      CurrencyCard(
-                        symbol: '+',
-                        currency: 'Add\nCurrency',
-                        rate: '',
-                        color: Colors.orangeAccent,
-                      ),
-                    ],
+                  BannerCarousel(
+                    imagePaths: imagePaths,
+                    height: 140,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 5),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ],
               ),
@@ -337,69 +334,155 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 }
 
-class CurrencyCard extends StatelessWidget {
-  const CurrencyCard({
-    required this.currency,
-    required this.symbol,
-    required this.color,
-    required this.rate,
-    super.key,
-  });
+class BannerCarousel extends StatefulWidget {
+  final List<String> imagePaths; // local asset paths
+  final double height;
+  final bool autoPlay;
+  final Duration autoPlayInterval;
+  final BoxFit fit;
+  final BorderRadius? borderRadius;
 
-  final String currency;
-  final String symbol;
-  final Color color;
-  final String rate;
+  const BannerCarousel({
+    Key? key,
+    required this.imagePaths,
+    this.height = 180,
+    this.autoPlay = false,
+    this.autoPlayInterval = const Duration(seconds: 4),
+    this.fit = BoxFit.cover,
+    this.borderRadius,
+  }) : super(key: key);
+
+  @override
+  State<BannerCarousel> createState() => _BannerCarouselState();
+}
+
+class _BannerCarouselState extends State<BannerCarousel> {
+  late final PageController _pageController;
+  int _currentIndex = 0;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: 0);
+    if (widget.autoPlay && widget.imagePaths.length > 1) {
+      _timer = Timer.periodic(widget.autoPlayInterval, (_) => _autoAdvance());
+    }
+  }
+
+  void _autoAdvance() {
+    if (!mounted) return;
+    final next = (_currentIndex + 1) % widget.imagePaths.length;
+    _pageController.animateToPage(
+      next,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    return Container(
-      height: size.height * 0.135,
-      width: size.width * 0.28,
-      // margin: const EdgeInsets.only(right: AppSizes.md),
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: AppColors.lightContainer,
-        borderRadius: BorderRadius.circular(AppSizes.cardRadiusLg),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    if (widget.imagePaths.isEmpty) {
+      return SizedBox(
+        height: widget.height,
+        child: const Center(child: Text('No images')),
+      );
+    }
+
+    return SizedBox(
+      height: widget.height,
+      child: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
-          Container(
-            height: 48,
-            width: 48,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(shape: BoxShape.circle, color: color),
-            child: Text(
-              symbol,
-              style: const TextStyle(
-                color: AppColors.black,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
+          ClipRRect(
+            borderRadius: widget.borderRadius ?? BorderRadius.circular(8),
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: widget.imagePaths.length,
+              onPageChanged: (index) => setState(() => _currentIndex = index),
+              itemBuilder: (context, index) {
+                final src = widget.imagePaths[index];
+                return GestureDetector(
+                  onTap: () {
+                    // Optional: handle tap on banner
+                  },
+                  child: Image.asset(
+                    src,
+                    width: double.infinity,
+                    height: widget.height,
+                    fit: widget.fit,
+                  ),
+                );
+              },
             ),
           ),
-          Text(
-            currency,
-            style: const TextStyle(
-              color: AppColors.black,
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+
+          // Dots indicator
+          Positioned(
+            bottom: 8,
+            left: 0,
+            right: 0,
+            child: _DotsIndicator(
+              count: widget.imagePaths.length,
+              selectedIndex: _currentIndex,
             ),
           ),
-          if (rate.isNotEmpty)
-            Text(
-              rate,
-              style: const TextStyle(
-                fontSize: AppSizes.fontSizeSm,
-                fontWeight: FontWeight.w400,
-                color: Colors.grey,
-              ),
-            ),
         ],
       ),
+    );
+  }
+}
+
+class _DotsIndicator extends StatelessWidget {
+  final int count;
+  final int selectedIndex;
+  final double dotSize;
+  final double spacing;
+
+  const _DotsIndicator({
+    Key? key,
+    required this.count,
+    required this.selectedIndex,
+    this.dotSize = 8,
+    this.spacing = 6,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (count <= 1) return const SizedBox.shrink();
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(count, (i) {
+        final isSelected = i == selectedIndex;
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          width: isSelected ? dotSize * 2 : dotSize,
+          height: dotSize,
+          margin: EdgeInsets.symmetric(horizontal: spacing / 2),
+          decoration: BoxDecoration(
+            color: isSelected ? Colors.white : Colors.white70,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: isSelected
+                ? [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 4,
+                      offset: Offset(0, 1),
+                    ),
+                  ]
+                : null,
+          ),
+        );
+      }),
     );
   }
 }

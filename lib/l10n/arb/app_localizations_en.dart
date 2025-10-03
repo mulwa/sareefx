@@ -134,4 +134,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resendCode => 'Resend Code';
+
+  @override
+  String get fundsTransfer => 'Funds Transfer';
+
+  @override
+  String get dealsOffers => 'Here are some deals & offers for you!';
 }

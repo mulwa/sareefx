@@ -24,7 +24,7 @@ class BalanceOption extends StatelessWidget {
           color: AppColors.lightContainer,
           borderRadius: BorderRadius.circular(AppSizes.cardRadiusMd),
         ),
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             icon,

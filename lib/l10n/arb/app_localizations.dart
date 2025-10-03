@@ -333,6 +333,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Resend Code'**
   String get resendCode;
+
+  /// Label for the Funds Transfer feature or screen title.
+  ///
+  /// In en, this message translates to:
+  /// **'Funds Transfer'**
+  String get fundsTransfer;
+
+  /// Message shown to users when displaying available deals and offers.
+  ///
+  /// In en, this message translates to:
+  /// **'Here are some deals & offers for you!'**
+  String get dealsOffers;
 }
 
 class _AppLocalizationsDelegate

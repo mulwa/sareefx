@@ -203,6 +203,16 @@
     "resendCode": "Resend Code",
     "@resendCode": {
         "description": "Label for Resend Code"
-    }
+    },
+
+  "fundsTransfer": "Funds Transfer",
+  "@fundsTransfer": {
+    "description": "Label for the Funds Transfer feature or screen title."
+  },
+   "dealsOffers": "Here are some deals & offers for you!",
+  "@dealsOffers": {
+    "description": "Message shown to users when displaying available deals and offers."
+  }
+
 
 }
