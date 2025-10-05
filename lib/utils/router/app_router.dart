@@ -28,6 +28,7 @@ class AppRouter {
   static const String resetPasswordRoute = 'reset-password-route';
   static const String dashboardRoute = 'dashboard-route';
   static const String landingRoute = 'landing-route';
+  static const String topUpRoute = 'top-up-route';
 
   static Route<String>? onGenerateRoute(RouteSettings settings) {
     // final args = settings.arguments;
@@ -85,6 +86,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => const DashboardScreen());
 
       case landingRoute:
+        return MaterialPageRoute(builder: (context) => const LandingScreen());
+      case topUpRoute:
         return MaterialPageRoute(builder: (context) => const LandingScreen());
     }
 

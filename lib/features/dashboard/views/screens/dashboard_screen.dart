@@ -3,9 +3,11 @@ import 'dart:ui';
 
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sareefx/features/dashboard/data/recent_transaction_data.dart';
 import 'package:sareefx/features/dashboard/views/views.dart';
+import 'package:sareefx/features/dashboard/views/widgets/kyc_notification.dart';
 import 'package:sareefx/l10n/l10n.dart';
 import 'package:sareefx/utils/core.dart';
 
@@ -191,6 +193,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 8.sp),
+                  KycNotificationCard(),
                 ],
               ),
             ),
@@ -396,13 +400,14 @@ class _BannerCarouselState extends State<BannerCarousel> {
       );
     }
 
-    return SizedBox(
-      height: widget.height,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          ClipRRect(
-            borderRadius: widget.borderRadius ?? BorderRadius.circular(8),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ClipRRect(
+          borderRadius: widget.borderRadius ?? BorderRadius.circular(8),
+          child: SizedBox(
+            height: widget.height,
+            width: double.infinity,
             child: PageView.builder(
               controller: _pageController,
               itemCount: widget.imagePaths.length,
@@ -423,19 +428,13 @@ class _BannerCarouselState extends State<BannerCarousel> {
               },
             ),
           ),
-
-          // Dots indicator
-          Positioned(
-            bottom: 8,
-            left: 0,
-            right: 0,
-            child: _DotsIndicator(
-              count: widget.imagePaths.length,
-              selectedIndex: _currentIndex,
-            ),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 8),
+        _DotsIndicator(
+          count: widget.imagePaths.length,
+          selectedIndex: _currentIndex,
+        ),
+      ],
     );
   }
 }
@@ -450,7 +449,7 @@ class _DotsIndicator extends StatelessWidget {
     Key? key,
     required this.count,
     required this.selectedIndex,
-    this.dotSize = 8,
+    this.dotSize = 4,
     this.spacing = 6,
   }) : super(key: key);
 
@@ -465,11 +464,11 @@ class _DotsIndicator extends StatelessWidget {
         final isSelected = i == selectedIndex;
         return AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          width: isSelected ? dotSize * 2 : dotSize,
+          width: dotSize,
           height: dotSize,
           margin: EdgeInsets.symmetric(horizontal: spacing / 2),
           decoration: BoxDecoration(
-            color: isSelected ? Colors.white : Colors.white70,
+            color: isSelected ? AppColors.dotIndicator : AppColors.grey,
             borderRadius: BorderRadius.circular(12),
             boxShadow: isSelected
                 ? [
