@@ -10,6 +10,7 @@ import 'package:sareefx/features/auth/views/reset_verify_email_screen.dart';
 import 'package:sareefx/features/auth/views/set_pin_screen.dart';
 import 'package:sareefx/features/auth/views/verify_email_screen.dart';
 import 'package:sareefx/features/auth/views/verify_phone_screen.dart';
+import 'package:sareefx/features/dashboard/exchange/exchange_page.dart';
 import 'package:sareefx/features/dashboard/topUp/top_up_page.dart';
 import 'package:sareefx/features/dashboard/topUp/top_up_receipt_page.dart';
 import 'package:sareefx/features/dashboard/topUp/verify_top_up.dart';
@@ -36,6 +37,7 @@ class AppRouter {
   static const String verifyTopUpRoute = 'verify-top-up-route';
   static const String topUpReceiptRoute = 'top-up-receipt-route';
   static const String recentTransactionRoute = 'recent-transaction-route';
+  static const String exchangeRoute = 'exchange-route';
 
   static Route<String>? onGenerateRoute(RouteSettings settings) {
     print('onGenerateRoute called with: ${settings.name}');
@@ -107,6 +109,8 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) => const RecentTransactionPage(),
         );
+      case exchangeRoute:
+        return MaterialPageRoute(builder: (context) => const ExchangePage());
     }
 
     return null;

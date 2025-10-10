@@ -186,6 +186,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             SizedBox(width: 12),
                             Expanded(
                               child: BalanceOption(
+                                onTap: () {
+                                  Navigator.of(
+                                    context,
+                                    rootNavigator: true,
+                                  ).pushNamed(AppRouter.exchangeRoute);
+                                },
                                 icon: SvgPicture.asset(AssetsPath.transferIcon),
                                 text: l10n.fundsTransfer,
                               ),
@@ -193,6 +199,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             SizedBox(width: 12),
                             Expanded(
                               child: BalanceOption(
+                                onTap: () {
+                                  Navigator.of(
+                                    context,
+                                    rootNavigator: true,
+                                  ).pushNamed(AppRouter.exchangeRoute);
+                                },
                                 icon: SvgPicture.asset(AssetsPath.exchangeIcon),
                                 text: l10n.exchange,
                               ),

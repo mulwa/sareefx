@@ -294,7 +294,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   fontSize: 14.sp,
                   color: AppColors.color26,
                   fontWeight: FontWeight.w500,
-                  fontFamily: GoogleFonts.manrope().fontFamily,
                 ),
               ),
             ),
