@@ -13,6 +13,7 @@ import 'package:sareefx/features/auth/views/verify_phone_screen.dart';
 import 'package:sareefx/features/dashboard/topUp/top_up_page.dart';
 import 'package:sareefx/features/dashboard/topUp/top_up_receipt_page.dart';
 import 'package:sareefx/features/dashboard/topUp/verify_top_up.dart';
+import 'package:sareefx/features/dashboard/transactions/recent_transaction_page.dart';
 import 'package:sareefx/features/dashboard/views/screens/dashboard_screen.dart';
 import 'package:sareefx/features/dashboard/views/screens/landing_screen.dart';
 import 'package:sareefx/features/onboard/view/screens/onboard_screen.dart';
@@ -34,6 +35,7 @@ class AppRouter {
   static const String topUpRoute = 'top-up-route';
   static const String verifyTopUpRoute = 'verify-top-up-route';
   static const String topUpReceiptRoute = 'top-up-receipt-route';
+  static const String recentTransactionRoute = 'recent-transaction-route';
 
   static Route<String>? onGenerateRoute(RouteSettings settings) {
     print('onGenerateRoute called with: ${settings.name}');
@@ -100,6 +102,10 @@ class AppRouter {
       case topUpReceiptRoute:
         return MaterialPageRoute(
           builder: (context) => const TopUpReceiptPage(),
+        );
+      case recentTransactionRoute:
+        return MaterialPageRoute(
+          builder: (context) => const RecentTransactionPage(),
         );
     }
 

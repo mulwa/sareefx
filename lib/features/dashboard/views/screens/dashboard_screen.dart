@@ -223,11 +223,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Text(
-                        l10n.seeMore,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(
+                            context,
+                            rootNavigator: true,
+                          ).pushNamed(AppRouter.recentTransactionRoute);
+                        },
+                        child: Text(
+                          l10n.seeMore,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ],
