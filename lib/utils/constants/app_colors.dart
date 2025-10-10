@@ -52,4 +52,14 @@ class AppColors {
   static const Color dotIndicator = Color(0xFF00929F);
   static const Color colorEB = Color(0xFFEB3239);
   static const Color color29 = Color(0xFF292929);
+  static const Color color1C = Color(0xFF1C3E69);
+  static const Color color16 = Color(0xFF161616);
+  static const Color color8C = Color(0xFF8C91A2);
+  static const Color color9D = Color(0xFF9DB2CE);
+  static const Color color1E = Color(0xFF1E1E1E);
+  static const Color color19 = Color(0xFF1976D2);
+  static const Color color23 = Color(0xFF23A26D);
+  static const Color colorED = Color(0xFFEDEDED);
+  static const Color color70 = Color(0xFF707070);
+  static const Color color3D = Color(0xFF3D3D3D);
 }

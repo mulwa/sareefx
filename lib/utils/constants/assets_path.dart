@@ -10,4 +10,5 @@ abstract class AssetsPath {
   static const String profileIcon = 'assets/images/profile-icon.svg';
   static const String walletIcon = 'assets/images/wallet-icon.svg';
   static const String carouselBanner = 'assets/images/carousel-banner.png';
+  static const String mpesaLogo = 'assets/images/mpesa.png';
 }

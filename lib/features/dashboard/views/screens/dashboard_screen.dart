@@ -167,6 +167,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           children: [
                             Expanded(
                               child: BalanceOption(
+                                onTap: () {
+                                  print(
+                                    'Navigating to: ${AppRouter.topUpRoute}',
+                                  );
+                                  Navigator.of(
+                                    context,
+                                    rootNavigator: true,
+                                  ).pushNamed(AppRouter.topUpRoute);
+                                },
                                 icon: const Icon(
                                   Icons.add,
                                   color: AppColors.secondary,

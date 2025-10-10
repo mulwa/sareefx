@@ -10,6 +10,9 @@ import 'package:sareefx/features/auth/views/reset_verify_email_screen.dart';
 import 'package:sareefx/features/auth/views/set_pin_screen.dart';
 import 'package:sareefx/features/auth/views/verify_email_screen.dart';
 import 'package:sareefx/features/auth/views/verify_phone_screen.dart';
+import 'package:sareefx/features/dashboard/topUp/top_up_page.dart';
+import 'package:sareefx/features/dashboard/topUp/top_up_receipt_page.dart';
+import 'package:sareefx/features/dashboard/topUp/verify_top_up.dart';
 import 'package:sareefx/features/dashboard/views/screens/dashboard_screen.dart';
 import 'package:sareefx/features/dashboard/views/screens/landing_screen.dart';
 import 'package:sareefx/features/onboard/view/screens/onboard_screen.dart';
@@ -29,8 +32,11 @@ class AppRouter {
   static const String dashboardRoute = 'dashboard-route';
   static const String landingRoute = 'landing-route';
   static const String topUpRoute = 'top-up-route';
+  static const String verifyTopUpRoute = 'verify-top-up-route';
+  static const String topUpReceiptRoute = 'top-up-receipt-route';
 
   static Route<String>? onGenerateRoute(RouteSettings settings) {
+    print('onGenerateRoute called with: ${settings.name}');
     // final args = settings.arguments;
     switch (settings.name) {
       case loginRoute:
@@ -88,7 +94,13 @@ class AppRouter {
       case landingRoute:
         return MaterialPageRoute(builder: (context) => const LandingScreen());
       case topUpRoute:
-        return MaterialPageRoute(builder: (context) => const LandingScreen());
+        return MaterialPageRoute(builder: (context) => const TopUpPage());
+      case verifyTopUpRoute:
+        return MaterialPageRoute(builder: (context) => const VerifyTopUpPage());
+      case topUpReceiptRoute:
+        return MaterialPageRoute(
+          builder: (context) => const TopUpReceiptPage(),
+        );
     }
 
     return null;
