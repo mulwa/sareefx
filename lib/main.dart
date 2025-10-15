@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sareefx/l10n/arb/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 800),
       minTextAdapt: true,
       builder: (context, child) {
-        return MaterialApp(
+        return GetMaterialApp(
           theme: ThemeData(
             appBarTheme: AppBarTheme(
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,

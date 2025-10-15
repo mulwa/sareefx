@@ -10,6 +10,7 @@ import 'package:sareefx/features/auth/views/reset_verify_email_screen.dart';
 import 'package:sareefx/features/auth/views/set_pin_screen.dart';
 import 'package:sareefx/features/auth/views/verify_email_screen.dart';
 import 'package:sareefx/features/auth/views/verify_phone_screen.dart';
+import 'package:sareefx/features/dashboard/exchange/confirm_payment_otp_page.dart';
 import 'package:sareefx/features/dashboard/exchange/exchange_details_page.dart';
 import 'package:sareefx/features/dashboard/exchange/exchange_page.dart';
 import 'package:sareefx/features/dashboard/exchange/payment_waiting_page.dart';
@@ -42,6 +43,7 @@ class AppRouter {
   static const String exchangeRoute = 'exchange-route';
   static const String exchangeDetailsRoute = 'exchange-details-route';
   static const String paymentWaitingRoute = 'payment-waiting-route';
+  static const String confirmPaymentOtpRoute = 'confirm-payment-otp-route';
 
   static Route<String>? onGenerateRoute(RouteSettings settings) {
     print('onGenerateRoute called with: ${settings.name}');
@@ -122,6 +124,10 @@ class AppRouter {
       case paymentWaitingRoute:
         return MaterialPageRoute(
           builder: (context) => const PaymentWaitingScreen(),
+        );
+      case confirmPaymentOtpRoute:
+        return MaterialPageRoute(
+          builder: (context) => const ConfirmPaymentOtpPage(),
         );
     }
 

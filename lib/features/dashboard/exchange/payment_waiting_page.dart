@@ -4,6 +4,7 @@ import 'package:sareefx/components/custom_filled_button.dart';
 import 'package:sareefx/components/custom_outline_btn.dart';
 import 'package:sareefx/features/auth/widgets/custom_app_bar_two.dart';
 import 'package:sareefx/utils/constants/constants.dart';
+import 'package:sareefx/utils/core.dart';
 
 class PaymentWaitingScreen extends StatelessWidget {
   const PaymentWaitingScreen({Key? key}) : super(key: key);
@@ -81,7 +82,10 @@ class PaymentWaitingScreen extends StatelessWidget {
                 CustomFilledBtn(
                   text: 'Confirm Payment',
                   onPressed: () {
-                    // Navigator.pushNamed(context, AppRouter.paymentWaitingRoute);
+                    Navigator.pushNamed(
+                      context,
+                      AppRouter.confirmPaymentOtpRoute,
+                    );
                   },
                 ),
 
