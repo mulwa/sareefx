@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:sareefx/features/dashboard/views/screens/dashboard_screen.dart';
+import 'package:sareefx/features/profile/profile_setting.dart';
 import 'package:sareefx/utils/core.dart';
 
 class LandingScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _LandingScreenState extends State<LandingScreen> {
   final List<Widget> _screens = const [
     DashboardScreen(),
     Center(child: Text('Wallet Screen')),
-    Center(child: Text('Profile Screen')),
+    ProfileSettingsPage(),
   ];
 
   @override

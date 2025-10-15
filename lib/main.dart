@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sareefx/features/controllers/kyc_controller.dart';
 import 'package:sareefx/l10n/arb/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sareefx/utils/core.dart';
@@ -22,6 +23,10 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (context, child) {
         return GetMaterialApp(
+          initialBinding: BindingsBuilder(() {
+            // Initialize any dependencies here if needed
+            Get.put(KYCController());
+          }),
           theme: ThemeData(
             appBarTheme: AppBarTheme(
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,

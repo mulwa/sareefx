@@ -20,7 +20,9 @@ import 'package:sareefx/features/dashboard/topUp/verify_top_up.dart';
 import 'package:sareefx/features/dashboard/transactions/recent_transaction_page.dart';
 import 'package:sareefx/features/dashboard/views/screens/dashboard_screen.dart';
 import 'package:sareefx/features/dashboard/views/screens/landing_screen.dart';
+import 'package:sareefx/features/kyc/kyc_verification_page.dart';
 import 'package:sareefx/features/onboard/view/screens/onboard_screen.dart';
+import 'package:sareefx/features/profile/my_details_page.dart';
 
 class AppRouter {
   static const String loginRoute = 'login-route';
@@ -44,6 +46,8 @@ class AppRouter {
   static const String exchangeDetailsRoute = 'exchange-details-route';
   static const String paymentWaitingRoute = 'payment-waiting-route';
   static const String confirmPaymentOtpRoute = 'confirm-payment-otp-route';
+  static const String kycVerificationRoute = 'kyc-verification-route';
+  static const String myDetailsPageRoute = 'my-details-page-route';
 
   static Route<String>? onGenerateRoute(RouteSettings settings) {
     print('onGenerateRoute called with: ${settings.name}');
@@ -129,6 +133,12 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) => const ConfirmPaymentOtpPage(),
         );
+      case kycVerificationRoute:
+        return MaterialPageRoute(
+          builder: (context) => const KYCVerificationPage(),
+        );
+      case myDetailsPageRoute:
+        return MaterialPageRoute(builder: (context) => const MyDetailsPage());
     }
 
     return null;

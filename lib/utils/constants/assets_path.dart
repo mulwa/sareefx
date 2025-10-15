@@ -12,4 +12,5 @@ abstract class AssetsPath {
   static const String carouselBanner = 'assets/images/carousel-banner.png';
   static const String mpesaLogo = 'assets/images/mpesa.png';
   static const String airtelLogo = 'assets/images/airtel_logo.png';
+  static const String takeSelfieIcon = 'assets/images/take_selfie.png';
 }

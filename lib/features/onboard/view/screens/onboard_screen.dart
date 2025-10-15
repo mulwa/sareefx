@@ -16,6 +16,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
   final _pageController = PageController();
   int _pageIndex = 0;
   bool _isLastPage = false;
+  bool _isFirstPage = true;
 
   @override
   void initState() {
@@ -48,6 +49,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                 itemBuilder: (context, index) {
                   final item = onboardViews[index];
                   _isLastPage = _pageIndex == onboardViews.length - 1;
+                  _isFirstPage = _pageIndex == 0;
                   return OnboardContent(
                     title: item.title,
                     description: item.description,
@@ -61,17 +63,19 @@ class _OnboardScreenState extends State<OnboardScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: AppSizes.md),
                 child: Row(
                   children: [
-                    Expanded(
-                      child: PopButton(
-                        bgColor: Colors.transparent,
-                        onTap: () {
-                          _pageController.previousPage(
-                            duration: const Duration(milliseconds: 200),
-                            curve: Curves.easeInOut,
-                          );
-                        },
-                      ),
-                    ),
+                    _isFirstPage
+                        ? SizedBox()
+                        : Expanded(
+                            child: PopButton(
+                              bgColor: Colors.transparent,
+                              onTap: () {
+                                _pageController.previousPage(
+                                  duration: const Duration(milliseconds: 200),
+                                  curve: Curves.easeInOut,
+                                );
+                              },
+                            ),
+                          ),
                     SizedBox(width: size.width * 0.02),
                     Expanded(
                       flex: 4,
