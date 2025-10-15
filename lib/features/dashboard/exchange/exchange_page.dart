@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sareefx/features/auth/widgets/custom_app_bar_two.dart';
 import 'package:sareefx/utils/constants/constants.dart';
+import 'package:sareefx/utils/router/app_router.dart';
 
 class ExchangePage extends StatefulWidget {
   const ExchangePage({Key? key}) : super(key: key);
@@ -277,7 +278,12 @@ class ExchangeCard extends StatelessWidget {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      AppRouter.exchangeDetailsRoute,
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.colorFC,
                     foregroundColor: Colors.black,
@@ -301,7 +307,12 @@ class ExchangeCard extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        AppRouter.exchangeDetailsRoute,
+                      );
+                    },
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.black,
                       padding: const EdgeInsets.symmetric(vertical: 16),

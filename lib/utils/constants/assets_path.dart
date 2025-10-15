@@ -11,4 +11,5 @@ abstract class AssetsPath {
   static const String walletIcon = 'assets/images/wallet-icon.svg';
   static const String carouselBanner = 'assets/images/carousel-banner.png';
   static const String mpesaLogo = 'assets/images/mpesa.png';
+  static const String airtelLogo = 'assets/images/airtel_logo.png';
 }
