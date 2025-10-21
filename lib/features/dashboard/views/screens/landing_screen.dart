@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:sareefx/features/ads/my_ads_page.dart';
 import 'package:sareefx/features/dashboard/views/screens/dashboard_screen.dart';
 import 'package:sareefx/features/profile/profile_setting.dart';
 import 'package:sareefx/utils/core.dart';
@@ -16,7 +17,7 @@ class _LandingScreenState extends State<LandingScreen> {
   final PersistentTabController _controller = PersistentTabController();
   final List<Widget> _screens = const [
     DashboardScreen(),
-    Center(child: Text('Wallet Screen')),
+    MyAdsPage(),
     ProfileSettingsPage(),
   ];
 
@@ -54,7 +55,7 @@ class _LandingScreenState extends State<LandingScreen> {
                 BlendMode.srcIn,
               ),
             ),
-            title: 'Wallet',
+            title: 'My ADS',
             activeColorPrimary: const Color(0xFF1c3e69),
             activeColorSecondary: Colors.white,
             textStyle: const TextStyle(

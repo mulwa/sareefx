@@ -23,6 +23,7 @@ import 'package:sareefx/features/dashboard/views/screens/landing_screen.dart';
 import 'package:sareefx/features/kyc/kyc_verification_page.dart';
 import 'package:sareefx/features/onboard/view/screens/onboard_screen.dart';
 import 'package:sareefx/features/profile/my_details_page.dart';
+import 'package:sareefx/features/profile/payment_method_page.dart';
 
 class AppRouter {
   static const String loginRoute = 'login-route';
@@ -48,6 +49,7 @@ class AppRouter {
   static const String confirmPaymentOtpRoute = 'confirm-payment-otp-route';
   static const String kycVerificationRoute = 'kyc-verification-route';
   static const String myDetailsPageRoute = 'my-details-page-route';
+  static const String paymentMethodRoute = 'payment-method-route';
 
   static Route<String>? onGenerateRoute(RouteSettings settings) {
     print('onGenerateRoute called with: ${settings.name}');
@@ -139,6 +141,8 @@ class AppRouter {
         );
       case myDetailsPageRoute:
         return MaterialPageRoute(builder: (context) => const MyDetailsPage());
+      case paymentMethodRoute:
+        return MaterialPageRoute(builder: (context) => PaymentMethodsScreen());
     }
 
     return null;

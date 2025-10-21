@@ -13,10 +13,9 @@ class ProfileSettingsPage extends StatelessWidget {
           Container(
             width: double.infinity,
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Color(0xFF1E3A5F), Color(0xFF2D5F8D)],
+              image: DecorationImage(
+                image: AssetImage(AssetsPath.dashBg),
+                fit: BoxFit.cover,
               ),
             ),
             child: SafeArea(
@@ -130,7 +129,12 @@ class ProfileSettingsPage extends StatelessWidget {
                   _buildMenuItem(
                     icon: Icons.account_balance_wallet_outlined,
                     title: 'Payment Methods',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(
+                        context,
+                        rootNavigator: true,
+                      ).pushNamed(AppRouter.paymentMethodRoute);
+                    },
                   ),
                   _buildMenuItem(
                     icon: Icons.settings_outlined,
