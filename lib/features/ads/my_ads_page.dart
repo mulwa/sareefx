@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:sareefx/components/custom_filled_button.dart';
+import 'package:sareefx/features/ads/ads_add_page.dart';
 import 'package:sareefx/features/auth/widgets/widgets.dart';
 import 'package:sareefx/utils/constants/app_colors.dart';
 import 'package:sareefx/utils/constants/app_sizes.dart';
@@ -11,40 +13,298 @@ class MyAdsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool hasAds = true;
+    final List<AdItem> ads = [
+      AdItem(
+        type: 'Sell',
+        currency: 'USD',
+        baseCurrency: 'KES',
+        rate: 130.47,
+        limit: '2,000.00 - 6,440.00 KES',
+        available: '49.36 USD',
+        paymentMethods: ['Airtel Money', 'M-Pesa', 'Bank Transfer'],
+        isOnline: true,
+      ),
+      AdItem(
+        type: 'Buy',
+        currency: 'USD',
+        baseCurrency: 'KES',
+        rate: 130.47,
+        limit: '2,000.00 - 6,440.00 KES',
+        available: '49.36 USD',
+        paymentMethods: ['Airtel Money', 'M-Pesa', 'Bank Transfer'],
+        isOnline: false,
+      ),
+    ];
+
     return Scaffold(
       body: Column(
         children: [
           AppBar(),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "No Exchange ADs",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14.sp,
-                      color: AppColors.color6C,
+            child: ads.isNotEmpty
+                ? ListView.separated(
+                    padding: EdgeInsets.all(16.0),
+                    itemCount: ads.length,
+                    separatorBuilder: (context, index) => SizedBox(height: 16),
+                    itemBuilder: (context, index) {
+                      return AdCard(ad: ads[index]);
+                    },
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "No Exchange ADs",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14.sp,
+                            color: AppColors.color6C,
+                          ),
+                        ),
+                        SizedBox(height: 8.0),
+                        Text(
+                          "You don't have any currency exchange ADs at the moment!",
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w300,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 28.0),
+                        CustomFilledBtn(
+                          text: "Post AD",
+                          onPressed: () {
+                            Get.to(PostAdPage());
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 8.0),
-                  Text(
-                    "You don’t have any currency exchange ADs at the moment!",
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w300,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 28.0),
-                  CustomFilledBtn(text: "Post AD", onPressed: () {}),
-                ],
-              ),
-            ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class AdItem {
+  final String type;
+  final String currency;
+  final String baseCurrency;
+  final double rate;
+  final String limit;
+  final String available;
+  final List<String> paymentMethods;
+  final bool isOnline;
+
+  AdItem({
+    required this.type,
+    required this.currency,
+    required this.baseCurrency,
+    required this.rate,
+    required this.limit,
+    required this.available,
+    required this.paymentMethods,
+    required this.isOnline,
+  });
+}
+
+class AdCard extends StatelessWidget {
+  final AdItem ad;
+
+  const AdCard({super.key, required this.ad});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'B',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      child: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color: ad.isOnline ? Colors.green : Colors.grey,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 1.5),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    '${ad.type} ${ad.currency} with ${ad.baseCurrency}',
+                    style: TextStyle(
+                      color: AppColors.color1C,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      ad.isOnline ? 'Online' : 'Offline',
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Switch(
+                      value: ad.isOnline,
+                      onChanged: (value) {
+                        // Handle toggle
+                      },
+                      activeColor: Colors.green,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            // Rate and Payment Method button
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Rate section
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '${ad.baseCurrency} ',
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Text(
+                            ad.rate.toStringAsFixed(2),
+                            style: TextStyle(
+                              fontSize: 28.sp,
+                              color: AppColors.color1C,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            ' / ${ad.currency}',
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12),
+                      Text(
+                        'Limit: ${ad.limit}',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Available: ${ad.available}',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Payment Method button and list
+                Container(
+                  constraints: BoxConstraints(maxWidth: 140),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          'Payment Method',
+                          style: TextStyle(
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 12),
+                      ...ad.paymentMethods.map(
+                        (method) => Padding(
+                          padding: EdgeInsets.only(bottom: 8),
+                          child: Text(
+                            method,
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -100,13 +360,13 @@ class AppBar extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(Icons.notifications, color: Colors.white),
-                  onPressed: () {
-                    // _showFilterBottomSheet(context);
-                  },
+                  onPressed: () {},
                 ),
                 IconButton(
                   color: AppColors.borderPrimary,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(PostAdPage());
+                  },
                   icon: Icon(Icons.add),
                 ),
               ],

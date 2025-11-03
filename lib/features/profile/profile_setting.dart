@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:sareefx/features/disputes/disputes_page.dart';
 import 'package:sareefx/utils/core.dart';
 
 class ProfileSettingsPage extends StatelessWidget {
@@ -144,7 +146,9 @@ class ProfileSettingsPage extends StatelessWidget {
                   _buildMenuItem(
                     icon: Icons.gavel_outlined,
                     title: 'Disputes',
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => DisputesPage());
+                    },
                   ),
                   _buildMenuItem(
                     icon: Icons.help_outline,
