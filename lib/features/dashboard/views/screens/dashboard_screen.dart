@@ -5,6 +5,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:sareefx/features/dashboard/data/recent_transaction_data.dart';
 import 'package:sareefx/features/dashboard/views/views.dart';
 import 'package:sareefx/features/dashboard/views/widgets/kyc_notification.dart';
@@ -168,13 +169,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Expanded(
                               child: BalanceOption(
                                 onTap: () {
-                                  print(
-                                    'Navigating to: ${AppRouter.topUpRoute}',
-                                  );
-                                  Navigator.of(
-                                    context,
-                                    rootNavigator: true,
-                                  ).pushNamed(AppRouter.topUpRoute);
+                                  print('Navigating to: ${AppRoutes.topUp}');
+                                  Get.toNamed(AppRoutes.topUp);
                                 },
                                 icon: const Icon(
                                   Icons.add,
@@ -187,10 +183,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Expanded(
                               child: BalanceOption(
                                 onTap: () {
-                                  Navigator.of(
-                                    context,
-                                    rootNavigator: true,
-                                  ).pushNamed(AppRouter.exchangeRoute);
+                                  Get.toNamed(AppRoutes.exchange);
                                 },
                                 icon: SvgPicture.asset(AssetsPath.transferIcon),
                                 text: l10n.fundsTransfer,
@@ -200,10 +193,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Expanded(
                               child: BalanceOption(
                                 onTap: () {
-                                  Navigator.of(
-                                    context,
-                                    rootNavigator: true,
-                                  ).pushNamed(AppRouter.exchangeRoute);
+                                  Get.toNamed(AppRoutes.exchange);
                                 },
                                 icon: SvgPicture.asset(AssetsPath.exchangeIcon),
                                 text: l10n.exchange,
@@ -237,10 +227,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(
-                            context,
-                            rootNavigator: true,
-                          ).pushNamed(AppRouter.recentTransactionRoute);
+                          Get.toNamed(AppRoutes.recentTransaction);
                         },
                         child: Text(
                           l10n.seeMore,

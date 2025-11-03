@@ -1,6 +1,8 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/instance_manager.dart';
 import 'package:sareefx/features/auth/widgets/custom_app_bar.dart';
 import 'package:sareefx/features/auth/widgets/widgets.dart';
 import 'package:sareefx/l10n/l10n.dart';
@@ -163,8 +165,8 @@ class TopUpPage extends StatelessWidget {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppSizes.md),
         child: BlockButtonWidget(
-          onPressed: () =>
-              Navigator.pushNamed(context, AppRouter.verifyTopUpRoute),
+          onPressed: () => Get.toNamed(AppRoutes.verifyTopUp),
+
           child: Text(
             "Top-Up",
             style: const TextStyle(

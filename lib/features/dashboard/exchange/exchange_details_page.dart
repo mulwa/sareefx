@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:sareefx/components/custom_filled_button.dart';
 import 'package:sareefx/features/auth/widgets/custom_app_bar_two.dart';
 import 'package:sareefx/utils/core.dart';
@@ -302,7 +303,7 @@ class _ExchangeDetailsPageState extends State<ExchangeDetailsPage> {
           CustomFilledBtn(
             text: 'Place Order',
             onPressed: () {
-              Navigator.pushNamed(context, AppRouter.paymentWaitingRoute);
+              Get.toNamed(AppRoutes.paymentWaiting);
             },
           ),
         ],

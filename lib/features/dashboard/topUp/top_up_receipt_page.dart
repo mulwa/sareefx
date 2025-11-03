@@ -1,6 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sareefx/features/auth/widgets/custom_app_bar.dart';
 import 'package:sareefx/features/auth/widgets/widgets.dart';
@@ -141,11 +142,8 @@ class TopUpReceiptPage extends StatelessWidget {
               height: 56,
               child: OutlinedButton.icon(
                 onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    AppRouter.dashboardRoute,
-                    (_) => false,
-                  );
+                  Get.offAllNamed(AppRoutes.dashboard);
+                  ;
                 },
                 icon: const Icon(
                   Icons.play_for_work_outlined,

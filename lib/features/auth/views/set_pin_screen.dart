@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:numpad_layout/numpad.dart';
 import 'package:sareefx/l10n/l10n.dart';
 import 'package:sareefx/utils/core.dart';
@@ -67,11 +68,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
                 isPin: true,
                 otpController: _pinTextController,
                 onCompleted: (pin) {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    AppRouter.loginRoute,
-                    (_) => false,
-                  );
+                  Get.offAllNamed(AppRoutes.login);
                 },
               ),
             ),

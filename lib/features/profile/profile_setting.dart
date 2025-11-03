@@ -90,10 +90,7 @@ class ProfileSettingsPage extends StatelessWidget {
                     icon: Icons.person_outline,
                     title: 'My Details',
                     onTap: () {
-                      Navigator.of(
-                        context,
-                        rootNavigator: true,
-                      ).pushNamed(AppRouter.myDetailsPageRoute);
+                      Get.toNamed(AppRoutes.myDetails);
                     },
                   ),
                   _buildMenuItem(
@@ -132,10 +129,7 @@ class ProfileSettingsPage extends StatelessWidget {
                     icon: Icons.account_balance_wallet_outlined,
                     title: 'Payment Methods',
                     onTap: () {
-                      Navigator.of(
-                        context,
-                        rootNavigator: true,
-                      ).pushNamed(AppRouter.paymentMethodRoute);
+                      Get.toNamed(AppRoutes.paymentMethod);
                     },
                   ),
                   _buildMenuItem(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:sareefx/features/auth/widgets/widgets.dart';
 import 'package:sareefx/l10n/l10n.dart';
 import 'package:sareefx/utils/core.dart';
@@ -29,8 +30,7 @@ class _ResetEnterEmailScreenState extends State<ResetEnterEmailScreen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppSizes.md),
         child: BlockButtonWidget(
-          onPressed: () =>
-              Navigator.pushNamed(context, AppRouter.resetVerifyEmailRoute),
+          onPressed: () => Get.toNamed(AppRoutes.resetVerifyEmail),
           child: Text(
             l10n.resetPassword,
             style: const TextStyle(

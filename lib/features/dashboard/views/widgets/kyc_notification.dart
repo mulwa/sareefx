@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:sareefx/utils/core.dart';
 
 class KycNotificationCard extends StatelessWidget {
@@ -10,10 +11,7 @@ class KycNotificationCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         // Navigator.pushNamed(context, AppRouter.kycVerificationRoute);
-        Navigator.of(
-          context,
-          rootNavigator: true,
-        ).pushNamed(AppRouter.kycVerificationRoute);
+        Get.toNamed(AppRoutes.kycVerification);
       },
       child: Container(
         // margin: const EdgeInsets.all(12),

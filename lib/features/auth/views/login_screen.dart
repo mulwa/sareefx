@@ -1,9 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sareefx/features/controllers/authentication_controller.dart';
 import 'package:sareefx/l10n/l10n.dart';
 import 'package:sareefx/utils/core.dart';
+import 'package:sareefx/utils/network_service.dart';
 import 'package:toastification/toastification.dart';
 
 import '../widgets/widgets.dart';
@@ -33,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final l10n = context.l10n;
+    final network = NetworkService.to;
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: AppSizes.md),
@@ -107,10 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    AppRouter.resetEnterEmailRoute,
-                  ),
+                  onTap: () => Get.toNamed(AppRoutes.resetEnterEmail),
                   child: Text(
                     l10n.forgotPassword,
                     style: const TextStyle(
@@ -122,62 +123,39 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(height: size.height * 0.04),
-              BlockButtonWidget(
-                onPressed: () async {
-                  if (!_formKey.currentState!.validate()) {
-                    return;
-                  }
-                  NotificationHelper.showToast(
-                    context,
-                    title: "Login success fully",
+              Obx(() {
+                if (network.isLoading.value) {
+                  return BlockButtonWidget(
+                    onPressed: () {},
+                    child: const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
                   );
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    AppRouter.landingRoute,
-                    (_) => false,
+                } else {
+                  return BlockButtonWidget(
+                    onPressed: () async {
+                      if (!_formKey.currentState!.validate()) {
+                        return;
+                      }
+                      Get.find<AuthController>().login(
+                        _emailAddressTextController.text,
+                        _passwordTextController.text,
+                      );
+                    },
+                    child: Text(
+                      l10n.logIn,
+                      style: const TextStyle(
+                        color: AppColors.black,
+                        fontSize: AppSizes.fontSizeSm,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                   );
-
-                  // Call your login logic directly here instead of using Bloc
-                  // final response = await loginUserDirect(
-                  //   userName: _emailAddressTextController.text,
-                  //   password: _passwordTextController.text,
-                  // );
-
-                  // if (response.responseCode == ResponseCode.success.code) {
-                  //   Navigator.pushNamedAndRemoveUntil(
-                  //     context,
-                  //     AppRouter.landingRoute,
-                  //     (_) => false,
-                  //   );
-                  //   NotificationHelper.showToast(
-                  //     context,
-                  //     title: response.responseDescription,
-                  //     type: ToastificationType.success,
-                  //   );
-                  // } else if (response.responseCode ==
-                  //     ResponseCode.accessDenied.code) {
-                  //   Navigator.pushNamed(context, AppRouter.verifyEmailRoute);
-                  //   NotificationHelper.showToast(
-                  //     context,
-                  //     title: response.responseDescription,
-                  //     type: ToastificationType.info,
-                  //   );
-                  // } else {
-                  //   NotificationHelper.showToast(
-                  //     context,
-                  //     title: response.responseDescription,
-                  //   );
-                  // }
-                },
-                child: Text(
-                  l10n.logIn,
-                  style: const TextStyle(
-                    color: AppColors.black,
-                    fontSize: AppSizes.fontSizeSm,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
+                }
+              }),
 
               SizedBox(height: size.height * 0.04),
               Center(

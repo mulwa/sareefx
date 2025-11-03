@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sareefx/features/auth/views/create_password_screen.dart';
 import 'package:sareefx/features/auth/views/enter_phone_number_screen.dart';
 import 'package:sareefx/features/auth/views/login_screen.dart';
-import 'package:sareefx/features/auth/views/enter_email_screen.dart'
-    show EnterEmailScreen;
+import 'package:sareefx/features/auth/views/enter_email_screen.dart';
 import 'package:sareefx/features/auth/views/reset_enter_email_screen.dart';
 import 'package:sareefx/features/auth/views/reset_password_screen.dart';
 import 'package:sareefx/features/auth/views/reset_verify_email_screen.dart';
@@ -25,126 +24,88 @@ import 'package:sareefx/features/onboard/view/screens/onboard_screen.dart';
 import 'package:sareefx/features/profile/my_details_page.dart';
 import 'package:sareefx/features/profile/payment_method_page.dart';
 
-class AppRouter {
-  static const String loginRoute = 'login-route';
-  static const String enterEmailRoute = 'enter-email-route';
-  static const String createPasswordRoute = 'create-password-route';
-  static const String verifyEmailRoute = 'verify-email-route';
-  static const String enterPhoneNumberRoute = 'enter-phone-number-route';
-  static const String verifyPhoneRoute = 'verify-phone-route';
-  static const String setPinRoute = 'set-pin-route';
-  static const String onboardRoute = 'onboard-route';
-  static const String resetEnterEmailRoute = 'reset-enter-email-route';
-  static const String resetVerifyEmailRoute = 'reset-verify-email-route';
-  static const String resetPasswordRoute = 'reset-password-route';
-  static const String dashboardRoute = 'dashboard-route';
-  static const String landingRoute = 'landing-route';
-  static const String topUpRoute = 'top-up-route';
-  static const String verifyTopUpRoute = 'verify-top-up-route';
-  static const String topUpReceiptRoute = 'top-up-receipt-route';
-  static const String recentTransactionRoute = 'recent-transaction-route';
-  static const String exchangeRoute = 'exchange-route';
-  static const String exchangeDetailsRoute = 'exchange-details-route';
-  static const String paymentWaitingRoute = 'payment-waiting-route';
-  static const String confirmPaymentOtpRoute = 'confirm-payment-otp-route';
-  static const String kycVerificationRoute = 'kyc-verification-route';
-  static const String myDetailsPageRoute = 'my-details-page-route';
-  static const String paymentMethodRoute = 'payment-method-route';
+class AppRoutes {
+  static const login = '/login';
+  static const enterEmail = '/enter-email';
+  static const createPassword = '/create-password';
+  static const verifyEmail = '/verify-email';
+  static const enterPhoneNumber = '/enter-phone-number';
+  static const verifyPhone = '/verify-phone';
+  static const setPin = '/set-pin';
+  static const onboard = '/onboard';
+  static const resetEnterEmail = '/reset-enter-email';
+  static const resetVerifyEmail = '/reset-verify-email';
+  static const resetPassword = '/reset-password';
+  static const dashboard = '/dashboard';
+  static const landing = '/landing';
+  static const topUp = '/top-up';
+  static const verifyTopUp = '/verify-top-up';
+  static const topUpReceipt = '/top-up-receipt';
+  static const recentTransaction = '/recent-transaction';
+  static const exchange = '/exchange';
+  static const exchangeDetails = '/exchange-details';
+  static const paymentWaiting = '/payment-waiting';
+  static const confirmPaymentOtp = '/confirm-payment-otp';
+  static const kycVerification = '/kyc-verification';
+  static const myDetails = '/my-details';
+  static const paymentMethod = '/payment-method';
+}
 
-  static Route<String>? onGenerateRoute(RouteSettings settings) {
-    print('onGenerateRoute called with: ${settings.name}');
-    // final args = settings.arguments;
-    switch (settings.name) {
-      case loginRoute:
-        return MaterialPageRoute(builder: (context) => const LoginScreen());
-
-      case enterEmailRoute:
-        return MaterialPageRoute(
-          builder: (context) => const EnterEmailScreen(),
-        );
-
-      case createPasswordRoute:
-        return MaterialPageRoute(
-          builder: (context) => const CreatePasswordScreen(),
-        );
-
-      case verifyEmailRoute:
-        return MaterialPageRoute(
-          builder: (context) => const VerifyEmailScreen(),
-        );
-
-      case enterPhoneNumberRoute:
-        return MaterialPageRoute(
-          builder: (context) => const EnterPhoneNumberScreen(),
-        );
-
-      case verifyPhoneRoute:
-        return MaterialPageRoute(
-          builder: (context) => const VerifyPhoneScreen(),
-        );
-
-      case setPinRoute:
-        return MaterialPageRoute(builder: (context) => const SetPinScreen());
-
-      case onboardRoute:
-        return MaterialPageRoute(builder: (context) => const OnboardScreen());
-
-      case resetEnterEmailRoute:
-        return MaterialPageRoute(
-          builder: (context) => const ResetEnterEmailScreen(),
-        );
-
-      case resetVerifyEmailRoute:
-        return MaterialPageRoute(
-          builder: (context) => const ResetVerifyEmailScreen(),
-        );
-
-      case resetPasswordRoute:
-        return MaterialPageRoute(
-          builder: (context) => const ResetPasswordScreen(),
-        );
-
-      case dashboardRoute:
-        return MaterialPageRoute(builder: (context) => const DashboardScreen());
-
-      case landingRoute:
-        return MaterialPageRoute(builder: (context) => const LandingScreen());
-      case topUpRoute:
-        return MaterialPageRoute(builder: (context) => const TopUpPage());
-      case verifyTopUpRoute:
-        return MaterialPageRoute(builder: (context) => const VerifyTopUpPage());
-      case topUpReceiptRoute:
-        return MaterialPageRoute(
-          builder: (context) => const TopUpReceiptPage(),
-        );
-      case recentTransactionRoute:
-        return MaterialPageRoute(
-          builder: (context) => const RecentTransactionPage(),
-        );
-      case exchangeRoute:
-        return MaterialPageRoute(builder: (context) => const ExchangePage());
-      case exchangeDetailsRoute:
-        return MaterialPageRoute(
-          builder: (context) => const ExchangeDetailsPage(),
-        );
-      case paymentWaitingRoute:
-        return MaterialPageRoute(
-          builder: (context) => const PaymentWaitingScreen(),
-        );
-      case confirmPaymentOtpRoute:
-        return MaterialPageRoute(
-          builder: (context) => const ConfirmPaymentOtpPage(),
-        );
-      case kycVerificationRoute:
-        return MaterialPageRoute(
-          builder: (context) => const KYCVerificationPage(),
-        );
-      case myDetailsPageRoute:
-        return MaterialPageRoute(builder: (context) => const MyDetailsPage());
-      case paymentMethodRoute:
-        return MaterialPageRoute(builder: (context) => PaymentMethodsScreen());
-    }
-
-    return null;
-  }
+class AppPages {
+  static final pages = [
+    GetPage(name: AppRoutes.login, page: () => const LoginScreen()),
+    GetPage(name: AppRoutes.enterEmail, page: () => const EnterEmailScreen()),
+    GetPage(
+      name: AppRoutes.createPassword,
+      page: () => const CreatePasswordScreen(),
+    ),
+    GetPage(name: AppRoutes.verifyEmail, page: () => const VerifyEmailScreen()),
+    GetPage(
+      name: AppRoutes.enterPhoneNumber,
+      page: () => const EnterPhoneNumberScreen(),
+    ),
+    GetPage(name: AppRoutes.verifyPhone, page: () => const VerifyPhoneScreen()),
+    GetPage(name: AppRoutes.setPin, page: () => const SetPinScreen()),
+    GetPage(name: AppRoutes.onboard, page: () => const OnboardScreen()),
+    GetPage(
+      name: AppRoutes.resetEnterEmail,
+      page: () => const ResetEnterEmailScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.resetVerifyEmail,
+      page: () => const ResetVerifyEmailScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.resetPassword,
+      page: () => const ResetPasswordScreen(),
+    ),
+    GetPage(name: AppRoutes.dashboard, page: () => const DashboardScreen()),
+    GetPage(name: AppRoutes.landing, page: () => const LandingScreen()),
+    GetPage(name: AppRoutes.topUp, page: () => const TopUpPage()),
+    GetPage(name: AppRoutes.verifyTopUp, page: () => const VerifyTopUpPage()),
+    GetPage(name: AppRoutes.topUpReceipt, page: () => const TopUpReceiptPage()),
+    GetPage(
+      name: AppRoutes.recentTransaction,
+      page: () => const RecentTransactionPage(),
+    ),
+    GetPage(name: AppRoutes.exchange, page: () => const ExchangePage()),
+    GetPage(
+      name: AppRoutes.exchangeDetails,
+      page: () => const ExchangeDetailsPage(),
+    ),
+    GetPage(
+      name: AppRoutes.paymentWaiting,
+      page: () => const PaymentWaitingScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.confirmPaymentOtp,
+      page: () => const ConfirmPaymentOtpPage(),
+    ),
+    GetPage(
+      name: AppRoutes.kycVerification,
+      page: () => const KYCVerificationPage(),
+    ),
+    GetPage(name: AppRoutes.myDetails, page: () => const MyDetailsPage()),
+    GetPage(name: AppRoutes.paymentMethod, page: () => PaymentMethodsScreen()),
+  ];
 }

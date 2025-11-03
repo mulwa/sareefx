@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/route_manager.dart';
 import 'package:sareefx/components/custom_filled_button.dart';
 import 'package:sareefx/components/custom_outline_btn.dart';
 import 'package:sareefx/features/auth/widgets/custom_app_bar_two.dart';
@@ -82,10 +83,7 @@ class PaymentWaitingScreen extends StatelessWidget {
                 CustomFilledBtn(
                   text: 'Confirm Payment',
                   onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      AppRouter.confirmPaymentOtpRoute,
-                    );
+                    Get.toNamed(AppRoutes.confirmPaymentOtp);
                   },
                 ),
 

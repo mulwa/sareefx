@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:sareefx/features/auth/widgets/pop_button.dart';
 import 'package:sareefx/features/auth/widgets/widgets.dart';
 import 'package:sareefx/l10n/l10n.dart';
@@ -34,8 +35,7 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppSizes.md),
         child: BlockButtonWidget(
-          onPressed: () =>
-              Navigator.pushNamed(context, AppRouter.verifyEmailRoute),
+          onPressed: () => Get.toNamed(AppRoutes.resetEnterEmail),
           child: Text(
             l10n.continueText,
             style: const TextStyle(

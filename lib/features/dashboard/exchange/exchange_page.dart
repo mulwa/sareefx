@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/route_manager.dart';
 import 'package:sareefx/features/auth/widgets/custom_app_bar_two.dart';
 import 'package:sareefx/utils/constants/constants.dart';
 import 'package:sareefx/utils/router/app_router.dart';
@@ -279,10 +280,7 @@ class ExchangeCard extends StatelessWidget {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      AppRouter.exchangeDetailsRoute,
-                    );
+                    Get.toNamed(AppRoutes.exchangeDetails);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.colorFC,
@@ -308,10 +306,7 @@ class ExchangeCard extends StatelessWidget {
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        AppRouter.exchangeDetailsRoute,
-                      );
+                      Get.toNamed(AppRoutes.exchangeDetails);
                     },
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.black,

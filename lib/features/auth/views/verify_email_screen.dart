@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sareefx/features/auth/widgets/widgets.dart';
 import 'package:sareefx/l10n/l10n.dart';
@@ -109,7 +110,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               child: PinField(
                 otpController: _otpTextController,
                 onCompleted: (otp) async {
-                  Navigator.pushNamed(context, AppRouter.enterPhoneNumberRoute);
+                  Get.toNamed(AppRoutes.enterPhoneNumber);
                   // Call your OTP verification logic directly here
                   // Example:
                   // final result = await verifyOtp(otp);

@@ -8,7 +8,7 @@ class ConfirmPaymentOtpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VerificationPage(
-      successRoute: AppRouter.topUpReceiptRoute,
+      successRoute: AppRoutes.topUpReceipt,
       phoneNumber: "O707200314",
       onResendCode: () async {
         print("Resend code tapped");

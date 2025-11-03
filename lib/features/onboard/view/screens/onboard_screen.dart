@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sareefx/l10n/l10n.dart';
 import 'package:sareefx/utils/core.dart';
 import 'package:sareefx/features/auth/widgets/pop_button.dart';
@@ -112,8 +113,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                   children: [
                     Expanded(
                       child: BlockButtonWidget(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, AppRouter.loginRoute),
+                        onPressed: () => Get.toNamed(AppRoutes.login),
                         color: Colors.transparent,
                         child: Text(
                           l10n.logIn,
@@ -128,10 +128,8 @@ class _OnboardScreenState extends State<OnboardScreen> {
                     SizedBox(width: size.width * 0.02),
                     Expanded(
                       child: BlockButtonWidget(
-                        onPressed: () => Navigator.pushNamed(
-                          context,
-                          AppRouter.enterEmailRoute,
-                        ),
+                        onPressed: () => Get.toNamed(AppRoutes.enterEmail),
+
                         child: Text(
                           l10n.signUp,
                           style: const TextStyle(

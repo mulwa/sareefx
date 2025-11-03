@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sareefx/features/auth/widgets/dash_indicator.dart';
 import 'package:sareefx/features/auth/widgets/pop_button.dart';
@@ -35,8 +36,7 @@ class _EnterEmailScreenState extends State<EnterEmailScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             BlockButtonWidget(
-              onPressed: () =>
-                  Navigator.pushNamed(context, AppRouter.createPasswordRoute),
+              onPressed: () => Get.toNamed(AppRoutes.createPassword),
               child: Text(
                 l10n.continueText,
                 style: const TextStyle(

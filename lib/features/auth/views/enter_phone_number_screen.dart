@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:sareefx/features/auth/widgets/widgets.dart';
 import 'package:sareefx/l10n/l10n.dart';
 import 'package:sareefx/utils/core.dart';
@@ -30,8 +31,7 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppSizes.md),
         child: BlockButtonWidget(
-          onPressed: () =>
-              Navigator.pushNamed(context, AppRouter.verifyPhoneRoute),
+          onPressed: () => Get.toNamed(AppRoutes.verifyPhone),
           child: Text(
             l10n.continueText,
             style: const TextStyle(
