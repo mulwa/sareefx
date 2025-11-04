@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sareefx/data/secure_storage.dart';
 import 'package:sareefx/features/controllers/authentication_controller.dart';
 import 'package:sareefx/features/controllers/kyc_controller.dart';
 import 'package:sareefx/l10n/arb/app_localizations.dart';
@@ -103,8 +104,9 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'SareefX (${config.values.buildFlavour.name})',
           initialBinding: BindingsBuilder(() {
+            final storage = SecureStorageServiceImpl();
             Get.put(KYCController());
-            Get.put(AuthController());
+            Get.put(AuthController(storage));
           }),
           theme: ThemeData(
             appBarTheme: AppBarTheme(

@@ -1,12 +1,43 @@
 import 'package:get/get.dart';
 import 'package:logger/web.dart';
+import 'package:sareefx/data/secure_storage.dart';
+import 'package:sareefx/features/auth/models/login_res_model.dart';
+import 'package:sareefx/features/auth/models/user_detail_res_model.dart';
+import 'package:sareefx/features/auth/models/wallet_model.dart';
 import 'package:sareefx/utils/constants/constants.dart';
 import 'package:sareefx/utils/constants/endpoints.dart';
 import 'package:sareefx/utils/helpers/notification_helper.dart';
 import 'package:sareefx/utils/network_service.dart';
+import 'package:sareefx/utils/router/app_router.dart';
 
 class AuthController extends GetxController {
   final isLoggedIn = false.obs;
+  final SecureStorageService _storage;
+  final accessToken = RxnString();
+  final userId = RxnString();
+  AuthController(this._storage);
+
+  @override
+  void onInit() {
+    super.onInit();
+    _restoreSession();
+  }
+
+  Future<void> _restoreSession() async {
+    final token = await _storage.retrieveToken();
+    final savedUserId = await _storage.retrieveUserId();
+
+    if (token != null && token.isNotEmpty && savedUserId != null) {
+      accessToken.value = token;
+      userId.value = savedUserId;
+      isLoggedIn.value = true;
+      NetworkService.to.setAuthToken(token);
+      Logger().i("Restored session for userId: $savedUserId");
+
+      await fetchUserData();
+      await fetchUserWallet();
+    }
+  }
 
   Future<void> login(String email, String password) async {
     try {
@@ -16,18 +47,21 @@ class AuthController extends GetxController {
           "userName": email,
           "encryptedPassword": password.encryptString(),
           "deviceId": "1234455",
-          "publicKey": "qwqewew",
           "loginType": "PASSWORD",
         },
         showLoading: true,
       );
-      Logger().i(response);
+      final LoginResModel loginResModel = LoginResModel.fromJson(response);
+      Logger().i(loginResModel.name);
 
       // Only reaches here if responseCode == '000'
-      final token = response['tokenResponse'];
-      NetworkService.to.setAuthToken(token);
+      NetworkService.to.setAuthToken(loginResModel.tokenResponse!.accessToken!);
+      _storage.persistUserId(loginResModel.userId!);
+      userId.value = loginResModel.userId;
       isLoggedIn.value = true;
-      Get.offAllNamed('/home');
+      fetchUserData();
+      fetchUserWallet();
+      Get.offAllNamed(AppRoutes.dashboard);
     } on NetworkException catch (e) {
       // Specific error handling based on response code
       switch (e.responseCode) {
@@ -81,7 +115,35 @@ class AuthController extends GetxController {
 
   Future<void> fetchUserData() async {
     try {
-      final response = await NetworkService.to.get('/user/profile');
+      Logger().d("Fetching user details");
+      final response = await NetworkService.to.get(
+        "${Endpoints.userDetails}/$userId",
+      );
+      UserDetailsResModel userDetailsResModel = UserDetailsResModel.fromJson(
+        response,
+      );
+      Logger().i("User name:::${userDetailsResModel.lastName}");
+
+      // Process response...
+    } on NetworkException catch (e) {
+      if (e.isNotFound) {
+        Get.snackbar('Profile Not Found', 'Please complete your profile');
+      } else {
+        Get.snackbar('Error', e.message);
+      }
+    }
+  }
+
+  Future<void> fetchUserWallet() async {
+    try {
+      Logger().d("Fetching user wallets");
+      final response = await NetworkService.to.get(
+        "${Endpoints.userWallet}/$userId/balance",
+      );
+      UserWalletModel userWalletModel = UserWalletModel.fromJson(response);
+
+      Logger().i("User name:::${userWalletModel}");
+
       // Process response...
     } on NetworkException catch (e) {
       if (e.isNotFound) {
