@@ -4,6 +4,8 @@ import 'package:sareefx/data/secure_storage.dart';
 import 'package:sareefx/features/auth/models/login_res_model.dart';
 import 'package:sareefx/features/auth/models/user_detail_res_model.dart';
 import 'package:sareefx/features/auth/models/wallet_model.dart';
+import 'package:sareefx/features/controllers/transactions_controller.dart';
+import 'package:sareefx/features/controllers/wallet_controller.dart';
 import 'package:sareefx/utils/constants/constants.dart';
 import 'package:sareefx/utils/constants/endpoints.dart';
 import 'package:sareefx/utils/helpers/notification_helper.dart';
@@ -15,6 +17,8 @@ class AuthController extends GetxController {
   final SecureStorageService _storage;
   final accessToken = RxnString();
   final userId = RxnString();
+  final Rxn<UserDetails> userDetails = Rxn<UserDetails>();
+
   AuthController(this._storage);
 
   @override
@@ -35,7 +39,8 @@ class AuthController extends GetxController {
       Logger().i("Restored session for userId: $savedUserId");
 
       await fetchUserData();
-      await fetchUserWallet();
+      Get.find<WalletController>().fetchUserWallet();
+      await Get.find<TransactionsController>().fetchWalletTransaction();
     }
   }
 
@@ -60,7 +65,9 @@ class AuthController extends GetxController {
       userId.value = loginResModel.userId;
       isLoggedIn.value = true;
       fetchUserData();
-      fetchUserWallet();
+      Get.find<WalletController>().fetchUserWallet();
+      Get.find<TransactionsController>().fetchWalletTransaction();
+
       Get.offAllNamed(AppRoutes.dashboard);
     } on NetworkException catch (e) {
       // Specific error handling based on response code
@@ -122,27 +129,8 @@ class AuthController extends GetxController {
       UserDetailsResModel userDetailsResModel = UserDetailsResModel.fromJson(
         response,
       );
-      Logger().i("User name:::${userDetailsResModel.lastName}");
-
-      // Process response...
-    } on NetworkException catch (e) {
-      if (e.isNotFound) {
-        Get.snackbar('Profile Not Found', 'Please complete your profile');
-      } else {
-        Get.snackbar('Error', e.message);
-      }
-    }
-  }
-
-  Future<void> fetchUserWallet() async {
-    try {
-      Logger().d("Fetching user wallets");
-      final response = await NetworkService.to.get(
-        "${Endpoints.userWallet}/$userId/balance",
-      );
-      UserWalletModel userWalletModel = UserWalletModel.fromJson(response);
-
-      Logger().i("User name:::${userWalletModel}");
+      userDetails.value = userDetailsResModel.userDetails;
+      Logger().i("User name:::${userDetailsResModel.userDetails}");
 
       // Process response...
     } on NetworkException catch (e) {

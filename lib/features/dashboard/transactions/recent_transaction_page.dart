@@ -1,15 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:sareefx/features/auth/widgets/custom_app_bar_two.dart';
 import 'package:sareefx/features/auth/widgets/widgets.dart';
+import 'package:sareefx/features/controllers/transactions_controller.dart';
 import 'package:sareefx/utils/core.dart';
 
-class RecentTransactionPage extends StatelessWidget {
+class RecentTransactionPage extends GetView<TransactionsController> {
   const RecentTransactionPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // make a local copy to avoid modifying the reactive list
+    final transactions = List.of(controller.walletTransaction);
+
+    // Sort by date (latest first)
+    transactions.sort(
+      (a, b) =>
+          DateTime.parse(b.createdAt!).compareTo(DateTime.parse(a.createdAt!)),
+    );
+
+    // Group transactions by date
+    final Map<String, List<dynamic>> grouped = {};
+    for (var tx in transactions) {
+      final date = DateTime.parse(tx.createdAt!);
+      final today = DateTime.now();
+      final yesterday = today.subtract(const Duration(days: 1));
+
+      String groupLabel;
+      if (DateUtils.isSameDay(date, today)) {
+        groupLabel = 'Today';
+      } else if (DateUtils.isSameDay(date, yesterday)) {
+        groupLabel = 'Yesterday';
+      } else {
+        groupLabel = DateFormat('dd MMM yyyy').format(date);
+      }
+
+      grouped.putIfAbsent(groupLabel, () => []);
+      grouped[groupLabel]!.add(tx);
+    }
+
+    // Flatten grouped items
+    final List<Map<String, dynamic>> groupedList = [];
+    grouped.forEach((dateLabel, txList) {
+      groupedList.add({'type': 'header', 'label': dateLabel});
+      for (var tx in txList) {
+        groupedList.add({'type': 'transaction', 'data': tx});
+      }
+    });
     return Scaffold(
       body: Column(
         children: [
@@ -20,92 +60,39 @@ class RecentTransactionPage extends StatelessWidget {
             showIcon: true,
             onIconButtonPressed: () => _showFilterBottomSheet(context),
           ),
+
           // Transactions List
           Expanded(
-            child: ListView(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              children: [
-                _buildDateHeader('Today'),
-                _buildTransactionItem(
-                  'Transferred USD',
-                  '12 Dec, 12:40',
-                  '-\$240.12',
-                  true,
-                  Icons.arrow_circle_up,
-                ),
-                _buildTransactionItem(
-                  'Top-up USD',
-                  '12 Dec, 12:40',
-                  '+\$240.12',
-                  false,
-                  Icons.arrow_circle_down,
-                ),
-                _buildTransactionItem(
-                  'Received USD',
-                  '12 Dec, 12:40',
-                  '+\$240.12',
-                  false,
-                  Icons.arrow_circle_down,
-                ),
-                SizedBox(height: 16),
-                _buildDateHeader('Yesterday'),
-                _buildTransactionItem(
-                  'Transferred USD',
-                  '12 Dec, 12:40',
-                  '-\$240.12',
-                  true,
-                  Icons.arrow_circle_up,
-                ),
-                _buildTransactionItem(
-                  'Top-up USD',
-                  '12 Dec, 12:40',
-                  '+\$240.12',
-                  false,
-                  Icons.arrow_circle_down,
-                ),
-                _buildTransactionItem(
-                  'Transferred USD',
-                  '12 Dec, 12:40',
-                  '-\$240.12',
-                  true,
-                  Icons.arrow_circle_up,
-                ),
-                _buildTransactionItem(
-                  'Received USD',
-                  '12 Dec, 12:40',
-                  '+\$240.12',
-                  false,
-                  Icons.arrow_circle_down,
-                ),
-                _buildTransactionItem(
-                  'Transferred USD',
-                  '12 Dec, 12:40',
-                  '-\$240.12',
-                  true,
-                  Icons.arrow_circle_up,
-                ),
-                _buildTransactionItem(
-                  'Top-up USD',
-                  '12 Dec, 12:40',
-                  '+\$240.12',
-                  false,
-                  Icons.arrow_circle_down,
-                ),
-                _buildTransactionItem(
-                  'Top-up USD',
-                  '12 Dec, 12:40',
-                  '+\$240.12',
-                  false,
-                  Icons.arrow_circle_down,
-                ),
-                _buildTransactionItem(
-                  'Top-up USD',
-                  '12 Dec, 12:40',
-                  '+\$240.12',
-                  false,
-                  Icons.arrow_circle_down,
-                ),
-              ],
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              itemCount: groupedList.length,
+              itemBuilder: (context, index) {
+                final item = groupedList[index];
+
+                if (item['type'] == 'header') {
+                  return _buildDateHeader(item['label']);
+                }
+
+                final tx = item['data'];
+                final isNegative = tx.transactionType == 2;
+                final icon = isNegative
+                    ? Icons.arrow_circle_up
+                    : Icons.arrow_circle_down;
+                final amountPrefix = isNegative ? '-' : '+';
+                final amountText = '$amountPrefix\$${tx.amount}';
+                final createdDate = DateTime.parse(tx.createdAt);
+                final formattedDate = DateFormat(
+                  'dd MMM, HH:mm',
+                ).format(createdDate);
+
+                return _buildTransactionItem(
+                  tx.description,
+                  formattedDate,
+                  amountText,
+                  isNegative,
+                  icon,
+                );
+              },
             ),
           ),
         ],

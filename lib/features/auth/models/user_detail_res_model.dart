@@ -1,4 +1,38 @@
 class UserDetailsResModel {
+  String? responseCode;
+  String? responseDescription;
+  UserDetails? userDetails;
+  Null? metadata;
+
+  UserDetailsResModel({
+    this.responseCode,
+    this.responseDescription,
+    this.userDetails,
+    this.metadata,
+  });
+
+  UserDetailsResModel.fromJson(Map<String, dynamic> json) {
+    responseCode = json['responseCode'];
+    responseDescription = json['responseDescription'];
+    userDetails = json['data'] != null
+        ? new UserDetails.fromJson(json['data'])
+        : null;
+    metadata = json['metadata'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['responseCode'] = this.responseCode;
+    data['responseDescription'] = this.responseDescription;
+    if (this.userDetails != null) {
+      data['userDetails'] = this.userDetails!.toJson();
+    }
+    data['metadata'] = this.metadata;
+    return data;
+  }
+}
+
+class UserDetails {
   String? id;
   String? username;
   String? firstName;
@@ -27,7 +61,7 @@ class UserDetailsResModel {
   Null? groups;
   Access? access;
 
-  UserDetailsResModel({
+  UserDetails({
     this.id,
     this.username,
     this.firstName,
@@ -57,7 +91,7 @@ class UserDetailsResModel {
     this.access,
   });
 
-  UserDetailsResModel.fromJson(Map<String, dynamic> json) {
+  UserDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     username = json['username'];
     firstName = json['firstName'];
@@ -121,6 +155,7 @@ class UserDetailsResModel {
     data['federationLink'] = this.federationLink;
     data['serviceAccountClientId'] = this.serviceAccountClientId;
     data['credentials'] = this.credentials;
+
     data['federatedIdentities'] = this.federatedIdentities;
     data['realmRoles'] = this.realmRoles;
     data['clientRoles'] = this.clientRoles;
@@ -139,29 +174,29 @@ class UserDetailsResModel {
 class Attributes {
   List<String>? phoneNumber;
   List<String>? countryCode;
-  List<String>? dateOfBirth;
   List<String>? middleName;
+  List<String>? dateOfBirth;
 
   Attributes({
     this.phoneNumber,
     this.countryCode,
-    this.dateOfBirth,
     this.middleName,
+    this.dateOfBirth,
   });
 
   Attributes.fromJson(Map<String, dynamic> json) {
     phoneNumber = json['phoneNumber'].cast<String>();
     countryCode = json['countryCode'].cast<String>();
-    dateOfBirth = json['dateOfBirth'].cast<String>();
     middleName = json['middleName'].cast<String>();
+    dateOfBirth = json['dateOfBirth'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['phoneNumber'] = this.phoneNumber;
     data['countryCode'] = this.countryCode;
-    data['dateOfBirth'] = this.dateOfBirth;
     data['middleName'] = this.middleName;
+    data['dateOfBirth'] = this.dateOfBirth;
     return data;
   }
 }

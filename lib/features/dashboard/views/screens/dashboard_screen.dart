@@ -6,10 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sareefx/features/controllers/authentication_controller.dart';
+import 'package:sareefx/features/controllers/transactions_controller.dart';
+import 'package:sareefx/features/controllers/wallet_controller.dart';
 import 'package:sareefx/features/dashboard/data/recent_transaction_data.dart';
 import 'package:sareefx/features/dashboard/views/views.dart';
 import 'package:sareefx/features/dashboard/views/widgets/kyc_notification.dart';
+import 'package:sareefx/features/dashboard/views/widgets/wallet_selection_card.dart';
+import 'package:sareefx/l10n/arb/app_localizations.dart';
 import 'package:sareefx/l10n/l10n.dart';
+import 'package:sareefx/models/wallet_transaction_model.dart';
 import 'package:sareefx/utils/core.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -31,325 +37,249 @@ class _DashboardScreenState extends State<DashboardScreen> {
     ];
     final size = MediaQuery.sizeOf(context);
     final l10n = context.l10n;
+    TransactionsController transactionsController =
+        Get.find<TransactionsController>();
+
+    AuthController authController = Get.find<AuthController>();
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: size.width,
-              padding: const EdgeInsets.only(
-                left: AppSizes.lg,
-                right: AppSizes.lg,
-                bottom: 45,
-              ),
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AssetsPath.dashBg),
-                  fit: BoxFit.cover,
+        child: Obx(
+          () => Column(
+            children: [
+              Container(
+                width: size.width,
+                padding: const EdgeInsets.only(
+                  left: AppSizes.lg,
+                  right: AppSizes.lg,
+                  bottom: 45,
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: size.height * 0.08),
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${l10n.hi}, Tafari Alex',
-                            style: const TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: AppSizes.fontSizeMd,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(AssetsPath.dashBg),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: size.height * 0.08),
+                    Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${l10n.hi}, ${authController.userDetails.value?.firstName ?? "Jonh"}',
+                              style: const TextStyle(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: AppSizes.fontSizeMd,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: size.height * 0.005),
-                          Text(
-                            l10n.haveAGoodDay,
-                            style: const TextStyle(
-                              color: AppColors.white,
-                              fontSize: AppSizes.fontSizeSm,
-                              fontWeight: FontWeight.w400,
+                            SizedBox(height: size.height * 0.005),
+                            Text(
+                              l10n.haveAGoodDay,
+                              style: const TextStyle(
+                                color: AppColors.white,
+                                fontSize: AppSizes.fontSizeSm,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
+                          ],
+                        ),
+                        const Spacer(),
+                        const Badge(
+                          child: Icon(
+                            Icons.notifications_none_outlined,
+                            color: AppColors.white,
+                            size: 30,
                           ),
-                        ],
-                      ),
-                      const Spacer(),
-                      const Badge(
-                        child: Icon(
-                          Icons.notifications_none_outlined,
+                        ),
+                        SizedBox(width: size.width * 0.05),
+                        const Icon(
+                          Icons.settings_outlined,
                           color: AppColors.white,
                           size: 30,
                         ),
-                      ),
-                      SizedBox(width: size.width * 0.05),
-                      const Icon(
-                        Icons.settings_outlined,
-                        color: AppColors.white,
-                        size: 30,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.025),
-                  Container(
-                    width: size.width,
-                    padding: const EdgeInsets.all(AppSizes.md),
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(
-                        AppSizes.cardRadiusLg,
-                      ),
-                    ),
-                    child: Column(
-                      spacing: size.height * 0.01,
-                      children: [
-                        Container(
-                          width: size.width * 0.24,
-                          padding: const EdgeInsets.all(AppSizes.sm),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              AppSizes.cardRadiusSm,
-                            ),
-                            border: Border.all(color: AppColors.grey),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Image.asset(AssetsPath.usaFlag),
-                              const Text('USD', style: TextStyle(fontSize: 14)),
-                              const Icon(
-                                Icons.keyboard_arrow_down_rounded,
-                                weight: 0.5,
-                                fill: 0.5,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(
-                          l10n.yourBalance,
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ImageFiltered(
-                              enabled: _isObscure,
-                              imageFilter: ImageFilter.blur(
-                                sigmaX: 10,
-                                sigmaY: 10,
-                              ),
-                              child: const Text(
-                                r'$32,128.80',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            IconButton(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              onPressed: () {
-                                _isObscure = !_isObscure;
-                                setState(() {});
-                              },
-                              icon: Icon(
-                                _isObscure
-                                    ? Icons.visibility_off_outlined
-                                    : Icons.visibility_outlined,
-                                size: 24,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: BalanceOption(
-                                onTap: () {
-                                  print('Navigating to: ${AppRoutes.topUp}');
-                                  Get.toNamed(AppRoutes.topUp);
-                                },
-                                icon: const Icon(
-                                  Icons.add,
-                                  color: AppColors.secondary,
-                                ),
-                                text: l10n.topUp,
-                              ),
-                            ),
-                            SizedBox(width: 12),
-                            Expanded(
-                              child: BalanceOption(
-                                onTap: () {
-                                  Get.toNamed(AppRoutes.exchange);
-                                },
-                                icon: SvgPicture.asset(AssetsPath.transferIcon),
-                                text: l10n.fundsTransfer,
-                              ),
-                            ),
-                            SizedBox(width: 12),
-                            Expanded(
-                              child: BalanceOption(
-                                onTap: () {
-                                  Get.toNamed(AppRoutes.exchange);
-                                },
-                                icon: SvgPicture.asset(AssetsPath.exchangeIcon),
-                                text: l10n.exchange,
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
-                  ),
-                  SizedBox(height: 8.sp),
-                  KycNotificationCard(),
-                ],
+                    SizedBox(height: size.height * 0.025),
+                    WalletSelectionCard(),
+                    SizedBox(height: 8.sp),
+                    KycNotificationCard(),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: size.height * 0.02),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSizes.md),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        l10n.recentTransactions,
+              SizedBox(height: size.height * 0.02),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSizes.md),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RecentTransactionCard(),
+                    SizedBox(height: size.height * 0.02),
+                    Text(
+                      l10n.dealsOffers,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    BannerCarousel(
+                      imagePaths: imagePaths,
+                      height: 140,
+                      autoPlay: true,
+                      autoPlayInterval: const Duration(seconds: 5),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class RecentTransactionCard extends GetView<TransactionsController> {
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final l10n = context.l10n;
+    WalletController walletController = Get.find<WalletController>();
+    return Obx(
+      () => controller.isLoading.value
+          ? CircularProgressIndicator()
+          : Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      l10n.recentTransactions,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.recentTransaction);
+                      },
+                      child: Text(
+                        l10n.seeMore,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.recentTransaction);
-                        },
-                        child: Text(
-                          l10n.seeMore,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: size.height * 0.02),
+                Swiper(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: controller.walletTransaction.length,
+                  layout: SwiperLayout.TINDER,
+                  itemWidth: size.width,
+                  itemHeight: size.height * 0.095,
+                  itemBuilder: (context, index) {
+                    final item = controller.walletTransaction[index];
+                    return Container(
+                      width: size.width,
+                      padding: const EdgeInsets.all(AppSizes.md),
+                      decoration: BoxDecoration(
+                        color: AppColors.lightContainer,
+                        borderRadius: BorderRadius.circular(
+                          AppSizes.cardRadiusMd,
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.15),
+                            offset: const Offset(0, 6),
+                            blurRadius: 10,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  Swiper(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: recentTransactions.length,
-                    layout: SwiperLayout.TINDER,
-                    itemWidth: size.width,
-                    itemHeight: size.height * 0.095,
-                    itemBuilder: (context, index) {
-                      final item = recentTransactions[index];
-                      return Container(
-                        width: size.width,
-                        padding: const EdgeInsets.all(AppSizes.md),
-                        decoration: BoxDecoration(
-                          color: AppColors.lightContainer,
-                          borderRadius: BorderRadius.circular(
-                            AppSizes.cardRadiusMd,
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 25,
+                            width: 25,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: item.transactionType == 1
+                                    ? Colors.green
+                                    : Colors.red,
+                                width: 2.5,
+                              ),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              item.transactionType == 1
+                                  ? Icons.arrow_forward
+                                  : Icons.arrow_back,
+                              size: 15,
+                              weight: 5,
+                              color: item.transactionType == 1
+                                  ? Colors.green
+                                  : Colors.red,
+                            ),
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.15),
-                              offset: const Offset(0, 6),
-                              blurRadius: 10,
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 25,
-                              width: 25,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: item.transColor,
-                                  width: 2.5,
+                          SizedBox(width: size.width * 0.05),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                item.description!,
+                                style: const TextStyle(
+                                  color: AppColors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                                shape: BoxShape.circle,
                               ),
-                              child: Icon(
-                                item.icon,
-                                size: 15,
-                                weight: 5,
-                                color: item.transColor,
+                              SizedBox(height: size.height * 0.005),
+                              Text(
+                                item.createdAt!,
+                                style: const TextStyle(
+                                  fontSize: AppSizes.fontSizeSm,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.grey,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: size.width * 0.05),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  item.title,
-                                  style: const TextStyle(
-                                    color: AppColors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                SizedBox(height: size.height * 0.005),
-                                Text(
-                                  item.date,
-                                  style: const TextStyle(
-                                    fontSize: AppSizes.fontSizeSm,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                            ImageFiltered(
-                              enabled: _isObscure,
+                            ],
+                          ),
+                          const Spacer(),
+                          Obx(
+                            () => ImageFiltered(
+                              enabled: walletController.isObscure.value,
                               imageFilter: ImageFilter.blur(
                                 sigmaX: 10,
                                 sigmaY: 10,
                               ),
                               child: Text(
-                                item.amount,
+                                "${item.amount}",
                                 style: TextStyle(
-                                  color: item.transColor,
+                                  color: item.transactionType == 1
+                                      ? Colors.green
+                                      : Colors.red,
                                   fontSize: AppSizes.fontSizeMd,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  Text(
-                    l10n.dealsOffers,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  BannerCarousel(
-                    imagePaths: imagePaths,
-                    height: 140,
-                    autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 5),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ],
-              ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
     );
   }
 }

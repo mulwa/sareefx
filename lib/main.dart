@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sareefx/data/secure_storage.dart';
 import 'package:sareefx/features/controllers/authentication_controller.dart';
 import 'package:sareefx/features/controllers/kyc_controller.dart';
+import 'package:sareefx/features/controllers/transactions_controller.dart';
+import 'package:sareefx/features/controllers/wallet_controller.dart';
 import 'package:sareefx/l10n/arb/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sareefx/utils/core.dart' hide BuildFlavour;
@@ -107,6 +109,8 @@ class MyApp extends StatelessWidget {
             final storage = SecureStorageServiceImpl();
             Get.put(KYCController());
             Get.put(AuthController(storage));
+            Get.put(TransactionsController());
+            Get.put(WalletController());
           }),
           theme: ThemeData(
             appBarTheme: AppBarTheme(

@@ -308,6 +308,7 @@ class NetworkService extends GetxService {
       if (queryParams != null) {
         uri = uri.replace(queryParameters: queryParams);
       }
+      Logger().d('GET:: $uri\nHeaders: ${_mergeHeaders(headers)}');
 
       final response = await http
           .get(uri, headers: _mergeHeaders(headers))
