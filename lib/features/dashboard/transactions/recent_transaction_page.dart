@@ -6,9 +6,10 @@ import 'package:intl/intl.dart';
 import 'package:sareefx/features/auth/widgets/custom_app_bar_two.dart';
 import 'package:sareefx/features/auth/widgets/widgets.dart';
 import 'package:sareefx/features/controllers/transactions_controller.dart';
+import 'package:sareefx/features/controllers/wallet_controller.dart';
 import 'package:sareefx/utils/core.dart';
 
-class RecentTransactionPage extends GetView<TransactionsController> {
+class RecentTransactionPage extends GetView<WalletController> {
   const RecentTransactionPage({Key? key}) : super(key: key);
 
   @override

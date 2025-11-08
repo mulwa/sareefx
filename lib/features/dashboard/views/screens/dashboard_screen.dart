@@ -144,7 +144,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 }
 
-class RecentTransactionCard extends GetView<TransactionsController> {
+class RecentTransactionCard extends GetView<WalletController> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
@@ -152,7 +152,7 @@ class RecentTransactionCard extends GetView<TransactionsController> {
     WalletController walletController = Get.find<WalletController>();
     return Obx(
       () => controller.isLoading.value
-          ? CircularProgressIndicator()
+          ? Center(child: CircularProgressIndicator())
           : Column(
               children: [
                 Row(

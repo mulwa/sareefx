@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/state_manager.dart';
+import 'package:sareefx/features/controllers/authentication_controller.dart';
 import 'package:sareefx/utils/constants/constants.dart';
 
-class MyDetailsPage extends StatelessWidget {
+class MyDetailsPage extends GetView<AuthController> {
   const MyDetailsPage({Key? key}) : super(key: key);
 
   @override
@@ -57,25 +59,28 @@ class MyDetailsPage extends StatelessWidget {
                   _buildDetailCard(
                     icon: Icons.person_outline,
                     label: 'Full Name',
-                    value: 'Tafari Alex',
+                    value:
+                        '${controller.userDetails.value!.firstName} ${controller.userDetails.value!.lastName}',
                   ),
                   const SizedBox(height: 16),
                   _buildDetailCard(
                     icon: Icons.phone_outlined,
                     label: 'Phone number',
-                    value: '+1 650-289-9054',
+                    value:
+                        '${controller.userDetails.value!.attributes!.phoneNumber}',
                   ),
                   const SizedBox(height: 16),
                   _buildDetailCard(
                     icon: Icons.email_outlined,
                     label: 'Email address',
-                    value: 'Tafarialex@gmail.com',
+                    value: '${controller.userDetails.value!.email}',
                   ),
                   const SizedBox(height: 16),
                   _buildDetailCard(
                     icon: Icons.calendar_today_outlined,
                     label: 'Date of birth',
-                    value: '24 Jul 1998',
+                    value:
+                        '${controller.userDetails.value!.attributes!.dateOfBirth}',
                   ),
                   const SizedBox(height: 16),
                   _buildVerificationCard(),

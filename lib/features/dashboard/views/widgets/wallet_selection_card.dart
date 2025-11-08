@@ -132,7 +132,7 @@ class WalletSelectionCard extends GetView<WalletController> {
                         title: Text(
                           '${w.currency} Wallet',
                           style: TextStyle(
-                            fontSize: 17,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: isSelected
                                 ? Colors.blue.shade900
@@ -172,7 +172,7 @@ class WalletSelectionCard extends GetView<WalletController> {
                               ),
                         onTap: () {
                           controller.switchWallet(w);
-                          Get.back();
+                          Get.offAllNamed(AppRoutes.landing);
                         },
                       ),
                     );

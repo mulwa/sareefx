@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:sareefx/features/controllers/authentication_controller.dart';
 import 'package:sareefx/features/disputes/disputes_page.dart';
 import 'package:sareefx/utils/core.dart';
 
-class ProfileSettingsPage extends StatelessWidget {
+class ProfileSettingsPage extends GetView<AuthController> {
   const ProfileSettingsPage({Key? key}) : super(key: key);
 
   @override
@@ -31,7 +32,7 @@ class ProfileSettingsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Tafari Alex',
+                          '${controller.userDetails.value!.firstName} ${controller.userDetails.value!.lastName}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20.sp,
@@ -40,7 +41,7 @@ class ProfileSettingsPage extends StatelessWidget {
                         ),
                         SizedBox(height: 4),
                         Text(
-                          'Tafarialex@gmail.com',
+                          '${controller.userDetails.value!.email}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12.sp,

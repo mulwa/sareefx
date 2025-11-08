@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/web.dart';
 import 'package:sareefx/data/secure_storage.dart';
@@ -6,6 +7,8 @@ import 'package:sareefx/features/auth/models/user_detail_res_model.dart';
 import 'package:sareefx/features/auth/models/wallet_model.dart';
 import 'package:sareefx/features/controllers/transactions_controller.dart';
 import 'package:sareefx/features/controllers/wallet_controller.dart';
+import 'package:sareefx/features/dashboard/views/screens/dashboard_screen.dart';
+import 'package:sareefx/features/dashboard/views/screens/screens.dart';
 import 'package:sareefx/utils/constants/constants.dart';
 import 'package:sareefx/utils/constants/endpoints.dart';
 import 'package:sareefx/utils/helpers/notification_helper.dart';
@@ -40,7 +43,7 @@ class AuthController extends GetxController {
 
       await fetchUserData();
       Get.find<WalletController>().fetchUserWallet();
-      await Get.find<TransactionsController>().fetchWalletTransaction();
+      await Get.find<WalletController>().fetchWalletTransaction();
     }
   }
 
@@ -66,9 +69,9 @@ class AuthController extends GetxController {
       isLoggedIn.value = true;
       fetchUserData();
       Get.find<WalletController>().fetchUserWallet();
-      Get.find<TransactionsController>().fetchWalletTransaction();
+      Get.find<WalletController>().fetchWalletTransaction();
 
-      Get.offAllNamed(AppRoutes.dashboard);
+      Get.offAllNamed(AppRoutes.landing);
     } on NetworkException catch (e) {
       // Specific error handling based on response code
       switch (e.responseCode) {
