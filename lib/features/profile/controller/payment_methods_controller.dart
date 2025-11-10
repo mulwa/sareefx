@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sareefx/features/profile/add_payment_method_bottom_sheet.dart';
 import 'package:sareefx/features/profile/model/payment_method_model.dart';
 
 class PaymentMethodsController extends GetxController {
@@ -64,15 +65,20 @@ class PaymentMethodsController extends GetxController {
   }
 
   void addPaymentMethod() {
-    // Handle adding new payment method
-    Get.snackbar(
-      'Info',
-      'Add payment method functionality',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFFFDB913),
-      colorText: Colors.black87,
-      margin: const EdgeInsets.all(16),
-      borderRadius: 12,
+    Get.bottomSheet(
+      AddPaymentMethodBottomSheet(),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
     );
+    // Handle adding new payment method
+    // Get.snackbar(
+    //   'Info',
+    //   'Add payment method functionality',
+    //   snackPosition: SnackPosition.BOTTOM,
+    //   backgroundColor: const Color(0xFFFDB913),
+    //   colorText: Colors.black87,
+    //   margin: const EdgeInsets.all(16),
+    //   borderRadius: 12,
+    // );
   }
 }

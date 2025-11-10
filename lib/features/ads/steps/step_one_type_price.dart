@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sareefx/components/block_button_widget.dart';
 import 'package:sareefx/features/controllers/postAd_controller.dart';
 
 class Step1TypeAndPrice extends StatefulWidget {
@@ -97,7 +98,13 @@ class _Step1TypeAndPriceState extends State<Step1TypeAndPrice> {
           const SizedBox(height: 12),
           _buildPriceSummary(),
           const SizedBox(height: 28),
-          _buildContinueButton(),
+          BlockButtonWidget(
+            onPressed: () => widget.controller.nextStep(),
+            child: Text(
+              'Continue',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            ),
+          ),
         ],
       ),
     );
@@ -237,27 +244,6 @@ class _Step1TypeAndPriceState extends State<Step1TypeAndPrice> {
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildContinueButton() {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: ElevatedButton(
-        onPressed: () => widget.controller.nextStep(),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFFFFC400),
-          foregroundColor: Colors.black87,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        child: const Text(
-          'Continue',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:sareefx/components/block_button_widget.dart';
 import 'package:sareefx/features/auth/widgets/custom_app_bar_two.dart';
 import 'package:sareefx/features/profile/controller/payment_methods_controller.dart';
 import 'package:sareefx/features/profile/edit_payment_method_bottomsheet.dart';
@@ -18,6 +19,7 @@ class PaymentMethodsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var hasPaymentMethods = controller.paymentMethods.isNotEmpty;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -28,66 +30,58 @@ class PaymentMethodsScreen extends StatelessWidget {
             showIcon: false,
           ),
           Expanded(
-            child: Obx(
-              () => SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Payment options',
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.color00,
+            child: hasPaymentMethods
+                ? Obx(
+                    () => SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Payment options',
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.color00,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            ...controller.paymentMethods.map(
+                              (method) => Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: _buildPaymentCard(method),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      ...controller.paymentMethods.map(
-                        (method) => Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
-                          child: _buildPaymentCard(method),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: ElevatedButton(
-                onPressed: controller.addPaymentMethod,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFDB913),
-                  foregroundColor: Colors.black87,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.add, size: 24),
-                    SizedBox(width: 8),
-                    Text(
-                      'Add Payment Method',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  )
+                : const NoPaymentMethodWidget(),
           ),
+          hasPaymentMethods
+              ? Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: BlockButtonWidget(
+                    onPressed: controller.addPaymentMethod,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.add),
+                        SizedBox(width: 8.sp),
+                        Text(
+                          "Add Payment Method",
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : SizedBox(),
         ],
       ),
     );
@@ -157,6 +151,59 @@ class PaymentMethodsScreen extends StatelessWidget {
                 color: Colors.black87,
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NoPaymentMethodWidget extends StatelessWidget {
+  const NoPaymentMethodWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(AssetsPath.adsIcon, height: 166.sp),
+          SizedBox(height: 20.sp),
+          Text(
+            "No Payment Method yet",
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 14.sp,
+              color: AppColors.color6C,
+            ),
+          ),
+          SizedBox(height: 8.0),
+          Text(
+            "Kindly add your preferred payment method to receive and make payments",
+            style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w300),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 28.0),
+          BlockButtonWidget(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.add),
+                SizedBox(width: 8.sp),
+                Text(
+                  "Add Payment Method",
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+            // color: AppColors.colorFF9,
+            onPressed: () {
+              // Get.to(PostAdPage());
+            },
           ),
         ],
       ),

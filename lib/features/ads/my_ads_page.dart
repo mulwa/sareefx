@@ -7,6 +7,7 @@ import 'package:sareefx/features/auth/widgets/widgets.dart';
 import 'package:sareefx/utils/constants/app_colors.dart';
 import 'package:sareefx/utils/constants/app_sizes.dart';
 import 'package:sareefx/utils/constants/assets_path.dart';
+import 'package:sareefx/utils/core.dart';
 
 class MyAdsPage extends StatelessWidget {
   const MyAdsPage({super.key});
@@ -15,26 +16,26 @@ class MyAdsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool hasAds = true;
     final List<AdItem> ads = [
-      AdItem(
-        type: 'Sell',
-        currency: 'USD',
-        baseCurrency: 'KES',
-        rate: 130.47,
-        limit: '2,000.00 - 6,440.00 KES',
-        available: '49.36 USD',
-        paymentMethods: ['Airtel Money', 'M-Pesa', 'Bank Transfer'],
-        isOnline: true,
-      ),
-      AdItem(
-        type: 'Buy',
-        currency: 'USD',
-        baseCurrency: 'KES',
-        rate: 130.47,
-        limit: '2,000.00 - 6,440.00 KES',
-        available: '49.36 USD',
-        paymentMethods: ['Airtel Money', 'M-Pesa', 'Bank Transfer'],
-        isOnline: false,
-      ),
+      // AdItem(
+      //   type: 'Sell',
+      //   currency: 'USD',
+      //   baseCurrency: 'KES',
+      //   rate: 130.47,
+      //   limit: '2,000.00 - 6,440.00 KES',
+      //   available: '49.36 USD',
+      //   paymentMethods: ['Airtel Money', 'M-Pesa', 'Bank Transfer'],
+      //   isOnline: true,
+      // ),
+      // AdItem(
+      //   type: 'Buy',
+      //   currency: 'USD',
+      //   baseCurrency: 'KES',
+      //   rate: 130.47,
+      //   limit: '2,000.00 - 6,440.00 KES',
+      //   available: '49.36 USD',
+      //   paymentMethods: ['Airtel Money', 'M-Pesa', 'Bank Transfer'],
+      //   isOnline: false,
+      // ),
     ];
 
     return Scaffold(
@@ -51,38 +52,60 @@ class MyAdsPage extends StatelessWidget {
                       return AdCard(ad: ads[index]);
                     },
                   )
-                : Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "No Exchange ADs",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14.sp,
-                            color: AppColors.color6C,
-                          ),
-                        ),
-                        SizedBox(height: 8.0),
-                        Text(
-                          "You don't have any currency exchange ADs at the moment!",
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w300,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 28.0),
-                        CustomFilledBtn(
-                          text: "Post AD",
-                          onPressed: () {
-                            Get.to(PostAdPage());
-                          },
-                        ),
-                      ],
-                    ),
+                : NoAdvertWidget(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NoAdvertWidget extends StatelessWidget {
+  const NoAdvertWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(AssetsPath.adsIcon, height: 166.sp),
+          SizedBox(height: 20.sp),
+          Text(
+            "No Exchange ADs",
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 14.sp,
+              color: AppColors.color6C,
+            ),
+          ),
+          SizedBox(height: 8.0),
+          Text(
+            "You don't have any currency exchange ADs at the moment!",
+            style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w300),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 28.0),
+          BlockButtonWidget(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.add),
+                SizedBox(width: 8.sp),
+                Text(
+                  "Post AD",
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w700,
                   ),
+                ),
+              ],
+            ),
+            // color: AppColors.colorFF9,
+            onPressed: () {
+              Get.to(PostAdPage());
+            },
           ),
         ],
       ),

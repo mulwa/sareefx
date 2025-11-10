@@ -4,6 +4,7 @@ import 'package:sareefx/features/ads/progress_stepper.dart';
 import 'package:sareefx/features/ads/steps/step2_amount_method.dart';
 import 'package:sareefx/features/ads/steps/step3_coditions.dart';
 import 'package:sareefx/features/ads/steps/step_one_type_price.dart';
+import 'package:sareefx/features/auth/widgets/custom_app_bar_two.dart';
 import 'package:sareefx/features/auth/widgets/pop_button.dart';
 import 'package:sareefx/features/controllers/postAd_controller.dart';
 import 'package:sareefx/utils/constants/app_colors.dart';
@@ -49,7 +50,11 @@ class _PostAdPageState extends State<PostAdPage> {
       body: SafeArea(
         child: Column(
           children: [
-            AppBar(),
+            CustomAppBarTwo(
+              title: 'Post Ads',
+              subtitle: 'Kindly provide the following details',
+              showIcon: false,
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ValueListenableBuilder<int>(
@@ -76,63 +81,6 @@ class _PostAdPageState extends State<PostAdPage> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class AppBar extends StatelessWidget {
-  const AppBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 160.sp,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(AssetsPath.dashBg),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 56),
-        child: SafeArea(
-          bottom: false,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              children: [
-                PopButton(onTap: () => Navigator.pop(context)),
-                SizedBox(width: 16.sp),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Post Ads",
-                        style: TextStyle(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: AppSizes.fontSizeMd,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        "Kindly provide the following details",
-                        style: TextStyle(
-                          color: AppColors.white,
-                          fontSize: 11.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );

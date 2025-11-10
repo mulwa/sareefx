@@ -4,16 +4,11 @@ import 'package:sareefx/components/custom_filled_button.dart';
 import 'package:sareefx/features/profile/controller/edit_payment_method_controller.dart';
 import 'package:sareefx/features/profile/model/payment_method_model.dart';
 
-class EditPaymentMethodBottomSheet extends StatelessWidget {
-  final PaymentMethodModel paymentMethod;
-
-  const EditPaymentMethodBottomSheet({Key? key, required this.paymentMethod})
-    : super(key: key);
+class AddPaymentMethodBottomSheet extends StatelessWidget {
+  const AddPaymentMethodBottomSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(EditPaymentMethodController(paymentMethod));
-
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -47,7 +42,7 @@ class EditPaymentMethodBottomSheet extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        'Edit Payment Method',
+                        'Add Payment Method',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -64,7 +59,7 @@ class EditPaymentMethodBottomSheet extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Edit payment method details',
+                    'Select your preferred payment method',
                     style: TextStyle(fontSize: 14, color: Colors.black54),
                   ),
                   const SizedBox(height: 24),
@@ -73,37 +68,34 @@ class EditPaymentMethodBottomSheet extends StatelessWidget {
                     style: TextStyle(fontSize: 14, color: Colors.black54),
                   ),
                   const SizedBox(height: 8),
-                  Obx(
-                    () => Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: controller.selectedProvider.value,
-                          isExpanded: true,
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          items: ['M-Pesa', 'Airtel Money'].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black87,
-                                ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[100],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: "M-Pesa",
+                        isExpanded: true,
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        items: ['M-Pesa', 'Airtel Money'].map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.black87,
                               ),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            controller.selectedProvider.value = newValue!;
-                          },
-                        ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {},
                       ),
                     ),
                   ),
+
                   const SizedBox(height: 20),
                   const Text(
                     'Enter Phone Number',
@@ -111,7 +103,7 @@ class EditPaymentMethodBottomSheet extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   TextField(
-                    controller: controller.phoneController,
+                    // controller: controller.phoneController,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                       filled: true,
@@ -127,34 +119,10 @@ class EditPaymentMethodBottomSheet extends StatelessWidget {
                   const SizedBox(height: 24),
                   Row(
                     children: [
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: controller.deleteMethod,
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: const Color(0xFFFDB913),
-                            side: const BorderSide(
-                              color: Color(0xFFFDB913),
-                              width: 2,
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          child: const Text(
-                            'Delete',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
                       // CustomFilledBtn(text: "Save", onPressed: () {}),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: controller.saveChanges,
+                          onPressed: () {},
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFFDB913),
                             foregroundColor: Colors.black87,
