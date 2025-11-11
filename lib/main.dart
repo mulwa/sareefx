@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sareefx/data/secure_storage.dart';
 import 'package:sareefx/features/controllers/authentication_controller.dart';
+import 'package:sareefx/features/controllers/exchange_controller.dart';
 import 'package:sareefx/features/controllers/kyc_controller.dart';
 import 'package:sareefx/features/controllers/transactions_controller.dart';
 import 'package:sareefx/features/controllers/wallet_controller.dart';
@@ -111,6 +112,7 @@ class MyApp extends StatelessWidget {
             Get.put(AuthController(storage));
             Get.put(TransactionsController());
             Get.put(WalletController());
+            Get.put(ExchangeController());
           }),
           theme: ThemeData(
             appBarTheme: AppBarTheme(

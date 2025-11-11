@@ -7,4 +7,5 @@ abstract class Endpoints {
   static const String walletTransaction =
       '/api/customer/customerWalletTransactions';
   static const String userWallet = '/api/customer';
+  static const String allAdvertiseOffer = '/exchange/all-advertise-offer';
 }

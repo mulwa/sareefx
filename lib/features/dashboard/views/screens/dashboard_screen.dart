@@ -37,9 +37,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     ];
     final size = MediaQuery.sizeOf(context);
     final l10n = context.l10n;
-    TransactionsController transactionsController =
-        Get.find<TransactionsController>();
-
     AuthController authController = Get.find<AuthController>();
     return Scaffold(
       body: SingleChildScrollView(

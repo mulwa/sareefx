@@ -2,8 +2,10 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:sareefx/features/auth/widgets/custom_app_bar_two.dart';
+import 'package:sareefx/features/controllers/exchange_controller.dart';
 import 'package:sareefx/utils/constants/constants.dart';
 import 'package:sareefx/utils/router/app_router.dart';
 
@@ -15,6 +17,14 @@ class ExchangePage extends StatefulWidget {
 }
 
 class _ExchangePageState extends State<ExchangePage> {
+  final ExchangeController exchangeController = Get.find<ExchangeController>();
+  @override
+  void initState() {
+    super.initState();
+
+    exchangeController.fetchAllExchangeAdvert();
+  }
+
   void _showFilterBottomSheet() {
     showModalBottomSheet(
       context: context,
@@ -36,7 +46,8 @@ class _ExchangePageState extends State<ExchangePage> {
           // Header
           CustomAppBarTwo(
             title: 'Exchange',
-            subtitle: 'Here are some of the exchange rates',
+            subtitle:
+                'Here are some of the exchange rates ${exchangeController.allExchangeAdsList.length}',
             showIcon: true,
             onIconButtonPressed: () {
               _showFilterBottomSheet();

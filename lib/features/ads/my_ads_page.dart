@@ -4,56 +4,40 @@ import 'package:get/get.dart';
 import 'package:sareefx/components/custom_filled_button.dart';
 import 'package:sareefx/features/ads/ads_add_page.dart';
 import 'package:sareefx/features/auth/widgets/widgets.dart';
+import 'package:sareefx/features/controllers/exchange_controller.dart';
+import 'package:sareefx/features/dashboard/models/exchange_res_model.dart';
 import 'package:sareefx/utils/constants/app_colors.dart';
 import 'package:sareefx/utils/constants/app_sizes.dart';
 import 'package:sareefx/utils/constants/assets_path.dart';
 import 'package:sareefx/utils/core.dart';
 
-class MyAdsPage extends StatelessWidget {
+class MyAdsPage extends GetView<ExchangeController> {
   const MyAdsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bool hasAds = true;
-    final List<AdItem> ads = [
-      // AdItem(
-      //   type: 'Sell',
-      //   currency: 'USD',
-      //   baseCurrency: 'KES',
-      //   rate: 130.47,
-      //   limit: '2,000.00 - 6,440.00 KES',
-      //   available: '49.36 USD',
-      //   paymentMethods: ['Airtel Money', 'M-Pesa', 'Bank Transfer'],
-      //   isOnline: true,
-      // ),
-      // AdItem(
-      //   type: 'Buy',
-      //   currency: 'USD',
-      //   baseCurrency: 'KES',
-      //   rate: 130.47,
-      //   limit: '2,000.00 - 6,440.00 KES',
-      //   available: '49.36 USD',
-      //   paymentMethods: ['Airtel Money', 'M-Pesa', 'Bank Transfer'],
-      //   isOnline: false,
-      // ),
-    ];
-
+    controller.fetchAllExchangeAdvert();
     return Scaffold(
       body: Column(
         children: [
           AppBar(),
-          Expanded(
-            child: ads.isNotEmpty
-                ? ListView.separated(
-                    padding: EdgeInsets.all(16.0),
-                    itemCount: ads.length,
-                    separatorBuilder: (context, index) => SizedBox(height: 16),
-                    itemBuilder: (context, index) {
-                      return AdCard(ad: ads[index]);
-                    },
-                  )
-                : NoAdvertWidget(),
-          ),
+          Obx(() {
+            return Expanded(
+              child: controller.isLoading.value
+                  ? Center(child: CircularProgressIndicator())
+                  : controller.allExchangeAdsList.isNotEmpty
+                  ? ListView.separated(
+                      padding: EdgeInsets.all(16.0),
+                      itemCount: controller.allExchangeAdsList.length,
+                      separatorBuilder: (context, index) =>
+                          SizedBox(height: 16),
+                      itemBuilder: (context, index) {
+                        return AdCard(ad: controller.allExchangeAdsList[index]);
+                      },
+                    )
+                  : NoAdvertWidget(),
+            );
+          }),
         ],
       ),
     );
@@ -136,7 +120,7 @@ class AdItem {
 }
 
 class AdCard extends StatelessWidget {
-  final AdItem ad;
+  final ExchangeModel ad;
 
   const AdCard({super.key, required this.ad});
 
@@ -188,7 +172,7 @@ class AdCard extends StatelessWidget {
                         width: 10,
                         height: 10,
                         decoration: BoxDecoration(
-                          color: ad.isOnline ? Colors.green : Colors.grey,
+                          color: ad.status == 1 ? Colors.green : Colors.grey,
                           shape: BoxShape.circle,
                           border: Border.all(color: Colors.white, width: 1.5),
                         ),
@@ -199,7 +183,7 @@ class AdCard extends StatelessWidget {
                 SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    '${ad.type} ${ad.currency} with ${ad.baseCurrency}',
+                    'Buy ${ad.fromCurrency} with ${ad.toCurrency}',
                     style: TextStyle(
                       color: AppColors.color1C,
                       fontSize: 14.sp,
@@ -210,7 +194,7 @@ class AdCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      ad.isOnline ? 'Online' : 'Offline',
+                      ad.status == 1 ? 'Online' : 'Offline',
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
@@ -218,7 +202,7 @@ class AdCard extends StatelessWidget {
                     ),
                     SizedBox(width: 8),
                     Switch(
-                      value: ad.isOnline,
+                      value: ad.status == 1,
                       onChanged: (value) {
                         // Handle toggle
                       },
@@ -242,14 +226,14 @@ class AdCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '${ad.baseCurrency} ',
+                            '${ad.fromCurrency} ',
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           Text(
-                            ad.rate.toStringAsFixed(2),
+                            ad.exchangeRate!.toStringAsFixed(2),
                             style: TextStyle(
                               fontSize: 28.sp,
                               color: AppColors.color1C,
@@ -257,7 +241,7 @@ class AdCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            ' / ${ad.currency}',
+                            ' / ${ad.toCurrency}',
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w400,
@@ -267,7 +251,7 @@ class AdCard extends StatelessWidget {
                       ),
                       SizedBox(height: 12),
                       Text(
-                        'Limit: ${ad.limit}',
+                        'Limit: ${ad.minAmount!.toStringAsFixed(2)} - ${ad.maxAmount!.toStringAsFixed(2)} ${ad.toCurrency}',
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
@@ -275,7 +259,7 @@ class AdCard extends StatelessWidget {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Available: ${ad.available}',
+                        'Available: ${ad.availableAmount!.toStringAsFixed(2)} ${ad.fromCurrency}',
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
@@ -308,11 +292,11 @@ class AdCard extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 12),
-                      ...ad.paymentMethods.map(
+                      ...ad.paymentMethods!.map(
                         (method) => Padding(
                           padding: EdgeInsets.only(bottom: 8),
                           child: Text(
-                            method,
+                            method.paymentMethod!,
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w400,
@@ -354,7 +338,7 @@ class AppBar extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: Row(
               children: [
-                PopButton(onTap: () => Navigator.pop(context)),
+                SizedBox(),
                 SizedBox(width: 16.sp),
                 Expanded(
                   child: Column(
